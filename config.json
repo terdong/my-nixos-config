@@ -1,0 +1,27 @@
+{
+  "user": {
+    "username": "your-username",
+    "fullName": "Your Full Name",
+    "email": "your.email@example.com"
+  },
+  "github": {
+    "username": "your-github-username",
+    "token": "your-github-token"
+  },
+  "system": {
+    "timezone": "Asia/Seoul",
+    "hostname": {
+      "default": "my-machine"
+    },
+    "stateVersion": "24.05"
+  },
+  "programs": {
+    "terminal": "alacritty",
+    "editor": "vim"
+  },
+  "ssh": {
+    "keys": [
+      "ssh-ed25519 AAAA... your@email.com"
+    ]
+  }
+}

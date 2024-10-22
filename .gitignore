@@ -1,0 +1,14 @@
+# Build outputs
+build/
+out/
+result/
+
+# Nix specific
+nix/store/
+.nix-profile/
+
+# Editor-specific
+.vscode/
+.idea/
+
+.history

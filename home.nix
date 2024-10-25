@@ -1,21 +1,23 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 let
-  userConfig = config.user;
-  githubConfig = config.github;
-  systemConfig = config.system;
+  #userConfig = config3.user;
+  #githubConfig = config3.github;
+  #systemConfig = config.system;
   envType = (import ./lib/utils.nix { inherit (pkgs) lib; }).detectEnvironment;
 in
 {
-  imports = [
-    ./modules/programs
-  ];
+  /*
+    imports = [
+      ./modules/programs
+    ];
+  */
 
   home = {
-    username = userConfig.username;
-    homeDirectory = "/home/${userConfig.username}";
-    stateVersion = systemConfig.stateVersion;
-
+    username = "darren";
+    homeDirectory = "/home/darren";
+    stateVersion = "24.05";
+    sessionVariables.SHELL = "/etc/profiles/per-user/darren/bin/bash";
     packages = with pkgs; [
       #${config.programs.terminal}
       #${config.programs.editor}
@@ -50,31 +52,34 @@ in
       };
     */
   };
+  programs.home-manager.enable = true;
 
   # 환경별 프로그램 설정
-  programs = {
-    git = {
-      enable = true;
-      userName = userConfig.fullName;
-      userEmail = userConfig.email;
+  /*
+    programs = {
+      git = {
+        enable = true;
+        userName = userConfig.fullName;
+        userEmail = userConfig.email;
 
-      extraConfig = {
-        github.user = githubConfig.username;
+        extraConfig = {
+          github.user = githubConfig.username;
+        };
       };
-    };
 
-    vscode = {
-      enable = true;
-      extensions =
-        if envType == "wsl" then
-          [
-            pkgs.vscode-extensions.ms-vscode-remote.remote-wsl
-          ]
-        else
-          [
-            # 리눅스 환경 확장
-            pkgs.vscode-extensions.ms-vscode.cpptools
-          ];
+        vscode = {
+           enable = true;
+           extensions =
+             if envType == "wsl" then
+               [
+                 pkgs.vscode-extensions.ms-vscode-remote.remote-wsl
+               ]
+             else
+               [
+                 # 리눅스 환경 확장
+                 pkgs.vscode-extensions.ms-vscode.cpptools
+               ];
+         };
     };
-  };
+  */
 }

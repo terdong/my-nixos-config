@@ -1,14 +1,15 @@
 # lib/utils.nix
 { lib, ... }:
 
-{
-  # JSON 파일을 읽어서 Nix set으로 변환하는 함수
+let
+  # JSON 파일을 읽어서 Nix 표현식으로 변환하는 함수
   importJSON = path: builtins.fromJSON (builtins.readFile path);
 
   # 설정 가져오기
   getConfig =
     configPath:
     let
+      # JSON 파일을 읽어서 Nix set으로 변환하는 함수
       config = importJSON configPath;
     in
     if builtins.pathExists configPath then
@@ -23,4 +24,7 @@
       result = builtins.exec [ "systemd-detect-virt" ];
     in
     if result == "wsl" then "wsl" else "linux";
+in
+{
+  inherit getConfig detectEnvironment;
 }

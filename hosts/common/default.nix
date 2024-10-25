@@ -1,17 +1,17 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   # 기본 시스템 설정
-  time.timeZone = config.system.timezone;
+  time.timeZone = "Asia/Seoul";
 
   # 기본 사용자 설정
-  users.users.${config.user.username} = {
+  users.users.darren = {
     isNormalUser = true;
     extraGroups = [
       "wheel"
       "networkmanager"
     ];
-    shell = pkgs.zsh;
+    #shell = pkgs.zsh;
     #openssh.authorizedKeys.keys = config.ssh.keys;
   };
 
@@ -44,5 +44,6 @@
   # };
 
   # 시스템 상태 버전
-  system.stateVersion = config.system.stateVersion;
+  # system.stateVersion = config.system.stateVersion;
+  system.stateVersion = "24.05";
 }

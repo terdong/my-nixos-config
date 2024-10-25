@@ -1,5 +1,5 @@
 {
-  description = "Flexible NixOS Configuration by Darren Kim";
+  # description = "Flexible NixOS Configuration by Darren Kim";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -11,7 +11,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    flake-utils.url = "github:numtide/flake-utils";
+    #flake-utils.url = "github:numtide/flake-utils";
     #scala-seed.url = "github:DevInsideYou/scala-seed";
     #nix-ld.url = "github:Mic92/nix-ld";
     #nix-ld.inputs.nixpkgs.follows = "nixpkgs";
@@ -22,13 +22,73 @@
       self,
       nixpkgs,
       home-manager,
-      flake-utils,
-      ...
-    }@inputs:
+      #flake-utils,
+      nixos-wsl,
+    }:
+    let
+      system = "x86_64-linux";
+      pkgs = import nixpkgs { inherit system; };
+
+      #utils = import ./lib/utils.nix { inherit (nixpkgs) lib; };
+      #config = utils.getConfig ./config.json;
+      #config3 = builtins.fromJSON (builtins.readFile "/home/darren/my-nix-flake-config/config3.json");
+
+      mkSystem =
+        hostName:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+
+          specialArgs = {
+            username = "darren";
+          };
+
+          modules = [
+            ./hosts/common/default.nix
+            nixos-wsl.nixosModules.wsl
+            ./hosts/wsl/default.nix
+            # (
+            #   { config2, pkgs, ... }:
+            #   let
+            #     envType = utils.detectEnvironment;
+            #   in
+            #   {
+            #     config = {
+            #       networking.hostName = hostName;
+
+            #       imports = if envType == "wsl" then [ ./hosts/wsl/default.nix ] else [ ./hosts/linux/default.nix ];
+            #     };
+            #   }
+            # )
+            home-manager.nixosModules.home-manager
+            {
+              #inherit config3;
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.darren = import ./home.nix;
+
+              # Optionally, use home-manager.extraSpecialArgs to pass
+              # arguments to home.nix
+            }
+            /*
+              home-manager.nixosModules.home-manager
+               {
+                 home-manager.useGlobalPkgs = true;
+                 home-manager.useUserPackages = true;
+                 home-manager.users.${config3.user.username} = import ./home.nix;
+               }
+            */
+          ];
+        };
+    in
+    {
+      nixosConfigurations.nixos = mkSystem "my-machine";
+    };
+  /*
     flake-utils.lib.eachDefaultSystem (
       system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
+        #pkgs = import nixpkgs { inherit system; };
 
         # utils 모듈 불러오기
         utils = import ./lib/utils.nix { inherit (nixpkgs) lib; };
@@ -41,6 +101,11 @@
           hostName:
           nixpkgs.lib.nixosSystem {
             inherit system;
+
+            settings.experimental-features = [
+              "nix-command"
+              "flakes"
+            ];
 
             specialArgs = {
               inherit config;
@@ -82,4 +147,5 @@
         nixosConfigurations.default = mkSystem config.system.hostname.default;
       }
     );
+  */
 }

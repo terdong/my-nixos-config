@@ -55,6 +55,21 @@ in
   programs.home-manager.enable = true;
 
   # 환경별 프로그램 설정
+  # 프로그램 설정
+  programs = {
+    # Git 설정
+    git = {
+      enable = true;
+      userName = "darren_kim";
+      userEmail = "terdong@gmail.com";
+
+      extraConfig = {
+        init.defaultBranch = "main";
+        pull.rebase = true;
+        #github.user = "darren_kim";
+      };
+    };
+  };
   /*
     programs = {
       git = {

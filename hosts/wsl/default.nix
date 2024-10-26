@@ -1,12 +1,12 @@
+{ nixos-wsl }:
 {
   pkgs,
+  lib,
   ...
-}@inputs:
+}:
 {
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  imports = [ nixos-wsl.nixosModules.default ];
+  #system.stateVersion = "24.05";
 
   wsl = {
     enable = true;

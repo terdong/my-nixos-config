@@ -1,5 +1,5 @@
 # lib/utils.nix
-{ lib, ... }:
+{ pkgs }:
 
 let
   # JSON 파일을 읽어서 Nix 표현식으로 변환하는 함수
@@ -18,13 +18,30 @@ let
       throw "Configuration file not found: ${configPath}";
 
   # 시스템 환경 감지 함수
-  detectEnvironment =
-    let
-      # systemd-detect-virt 명령어 실행
-      result = builtins.exec [ "systemd-detect-virt" ];
-    in
-    if result == "wsl" then "wsl" else "linux";
+  isWSL =
+    builtins.readFile (
+      pkgs.runCommand "virt-type" { } ''${pkgs.systemd}/bin/systemd-detect-virt > $out''
+    ) == "wsl\n";
 in
+/*
+  detectEnvironment = builtins.replaceStrings [ "\n" ] [ "" ] (
+    builtins.readFile pkgs.runCommand "virt-type" { } ''
+      ${pkgs.systemd}/bin/systemd-detect-virt > $out
+    ''
+  );
+*/
+/*
+  detectEnvironment =
+   let
+     # systemd-detect-virt 명령어 실행
+     result = pkgs.runCommand "detect-virt" { } ''
+             result=$(systemd-detect-virt || true)
+             echo "$result" > $out
+     '';
+   in
+   if result == "wsl" then "wsl" else "linux";
+*/
 {
-  inherit getConfig detectEnvironment;
+
+  inherit getConfig isWSL;
 }

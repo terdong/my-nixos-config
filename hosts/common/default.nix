@@ -15,6 +15,11 @@
     #openssh.authorizedKeys.keys = config.ssh.keys;
   };
 
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+
   # 환경 변수 설정
   environment = {
     # sessionVariables = {

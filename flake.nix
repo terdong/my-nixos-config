@@ -27,11 +27,18 @@
     }:
     let
       system = "x86_64-linux";
-      pkgs = import nixpkgs { inherit system; };
+      pkgs = nixpkgs.legacyPackages.${system};
 
-      #utils = import ./lib/utils.nix { inherit (nixpkgs) lib; };
+      # utils = import ./lib/utils.nix { inherit (nixpkgs) lib; };
+      utils = import ./lib/utils.nix { inherit pkgs; };
       #config = utils.getConfig ./config.json;
       #config3 = builtins.fromJSON (builtins.readFile "/home/darren/my-nix-flake-config/config3.json");
+
+      platformConfig =
+        if utils.isWSL then
+          (import ./hosts/wsl/default.nix { inherit nixos-wsl; })
+        else
+          ./hosts/linux/default.nix;
 
       mkSystem =
         hostName:
@@ -44,21 +51,27 @@
 
           modules = [
             ./hosts/common/default.nix
-            nixos-wsl.nixosModules.wsl
-            ./hosts/wsl/default.nix
-            # (
-            #   { config2, pkgs, ... }:
-            #   let
-            #     envType = utils.detectEnvironment;
-            #   in
-            #   {
-            #     config = {
-            #       networking.hostName = hostName;
-
-            #       imports = if envType == "wsl" then [ ./hosts/wsl/default.nix ] else [ ./hosts/linux/default.nix ];
-            #     };
-            #   }
+            platformConfig
             # )
+            /*
+              (
+                      { config2, pkgs, ... }:
+                      let
+                        envType = utils.detectEnvironment;
+                      in
+                      {
+                        # config = {
+                        #   networking.hostName = hostName;
+
+                        imports =
+                          if envType == "wsl" then
+                            [ (import ./hosts/wsl/default.nix { inherit nixos-wsl; }) ]
+                          else
+                            [ ./hosts/linux/default.nix ];
+                        };
+                      }
+                    )
+            */
             home-manager.nixosModules.home-manager
             {
               #inherit config3;

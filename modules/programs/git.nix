@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, myConfig, ... }:
 
 {
   home.packages = with pkgs; [
@@ -6,10 +6,10 @@
     git
   ];
 
-  programs.git = {
+  programs.git = with myConfig.user; {
     enable = true;
-    userName = "darren_kim";
-    userEmail = "terdong@gmail.com";
+    userName = full_name;
+    userEmail = email;
 
     extraConfig = {
       init.defaultBranch = "main";

@@ -5,29 +5,23 @@
 }:
 
 {
-  # 기본 시스템 설정
-  # time.timeZone = "Asia/Seoul";
-  time.timeZone = myConfig.system.timezone;
+  system.stateVersion = myConfig.system.state_version;
+  time.timeZone = myConfig.system.time_zone;
+  networking.hostName = myConfig.system.host_name;
 
-  # 기본 사용자 설정
-  users.users.darren = {
-    isNormalUser = true;
-    extraGroups = [
-      "wheel"
-      "networkmanager"
-    ];
-    #shell = pkgs.zsh;
-    #openssh.authorizedKeys.keys = myConfig.ssh.keys;
+  users = {
+    defaultUserShell = pkgs.nushell;
+    users.${myConfig.user.name} = {
+      isNormalUser = true;
+      extraGroups = [
+        "wheel"
+        "networkmanager"
+      ];
+      #shell = pkgs.zsh;
+      #openssh.authorizedKeys.keys = myConfig.ssh.keys;
+    };
   };
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
-
-  #networking.hostName = myConfig.networking.hostName;
-
-  # 환경 변수 설정
   environment = {
     # sessionVariables = {
     #   GITHUB_TOKEN = myConfig.github.token;
@@ -44,7 +38,6 @@
     ];
   };
 
-  # 기본 서비스 설정
   # services = {
   #   openssh = {
   #     enable = true;
@@ -55,7 +48,8 @@
   #   };
   # };
 
-  # 시스템 상태 버전
-  # system.stateVersion = myConfig.system.stateVersion;
-  system.stateVersion = "24.05";
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 }

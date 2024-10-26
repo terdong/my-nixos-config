@@ -1,16 +1,14 @@
 
-whell = "wheel"
-
 [user]
 name = "darren"
 email = "your.email@example.com"
 full_name = "Darren Kim"
 
 [system]
-name = "x86_64-linux"     #variations: x86_64-linux, x86_64-darwin, aarch64-linux, aarch64-darwin
-timezone = "Asia/Kolkata"
-hostname = "nixos1"
-stateVersion = "24.05"
+name = "x86_64-linux"    #variations: x86_64-linux, x86_64-darwin, aarch64-linux, aarch64-darwin
+time_zone = "Asia/Seoul"
+host_name = "nixos"
+state_version = "24.05"
 
 [programs]
 terminal = "alacritty"

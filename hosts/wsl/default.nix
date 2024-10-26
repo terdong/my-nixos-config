@@ -2,7 +2,7 @@
 {
   pkgs,
   lib,
-  # myConfig,
+  myConfig,
   ...
 }:
 {
@@ -11,7 +11,7 @@
 
   wsl = {
     enable = true;
-    defaultUser = "darren";
+    defaultUser = myConfig.user.name;
     #nativeSystemd = true;
     wslConf = {
       automount = {

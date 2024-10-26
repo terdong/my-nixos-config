@@ -28,8 +28,6 @@
       pkgs = nixpkgs.legacyPackages.${system};
       utils = import ./lib/utils.nix { inherit pkgs; };
 
-      testTZ = "Asia/Tokyo";
-
       platformConfig =
         if utils.isWSL then
           (import ./hosts/wsl/default.nix { inherit nixos-wsl; })
@@ -45,6 +43,7 @@
           inherit myConfig;
           #inherit utils;
         };
+        #imports = [ ./modules/programs ];
         modules = [
           ./hosts/common/default.nix
           platformConfig
@@ -62,17 +61,6 @@
             # Optionally, use home-manager.extraSpecialArgs to pass
             # arguments to home.nix
           }
-          /*
-            (
-                     {
-                       pkgs,
-                       ...
-                     }:
-                     {
-                       time.timeZone = myConfig.system.timezone;
-                     }
-                   )
-          */
         ];
       };
     };

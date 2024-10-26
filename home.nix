@@ -9,12 +9,11 @@ let
 in
 {
   imports = [ ./modules/programs ];
-
   home = {
     username = myConfig.user.name;
-    homeDirectory = "/home/darren";
-    stateVersion = "24.05";
-    sessionVariables.SHELL = "/etc/profiles/per-user/darren/bin/bash";
+    homeDirectory = "/home/${myConfig.user.name}";
+    stateVersion = myConfig.system.state_version;
+    sessionVariables.SHELL = "/etc/profiles/per-user/darren/bin/nu";
     packages = with pkgs; [
       #${myConfig.programs.terminal}
       #${myConfig.programs.editor}

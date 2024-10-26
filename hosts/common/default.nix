@@ -1,8 +1,13 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  myConfig,
+  ...
+}:
 
 {
   # 기본 시스템 설정
-  time.timeZone = "Asia/Seoul";
+  # time.timeZone = "Asia/Seoul";
+  time.timeZone = myConfig.system.timezone;
 
   # 기본 사용자 설정
   users.users.darren = {
@@ -12,7 +17,7 @@
       "networkmanager"
     ];
     #shell = pkgs.zsh;
-    #openssh.authorizedKeys.keys = config.ssh.keys;
+    #openssh.authorizedKeys.keys = myConfig.ssh.keys;
   };
 
   nix.settings.experimental-features = [
@@ -20,17 +25,19 @@
     "flakes"
   ];
 
+  #networking.hostName = myConfig.networking.hostName;
+
   # 환경 변수 설정
   environment = {
     # sessionVariables = {
-    #   GITHUB_TOKEN = config.github.token;
+    #   GITHUB_TOKEN = myConfig.github.token;
     # };
 
     systemPackages = with pkgs; [
       nixfmt-rfc-style
       wget
       httpie
-      git
+      #git
       vim
       htop
       tmux
@@ -49,6 +56,6 @@
   # };
 
   # 시스템 상태 버전
-  # system.stateVersion = config.system.stateVersion;
+  # system.stateVersion = myConfig.system.stateVersion;
   system.stateVersion = "24.05";
 }

@@ -2,6 +2,7 @@
 {
   pkgs,
   lib,
+  # myConfig,
   ...
 }:
 {
@@ -12,7 +13,6 @@
     enable = true;
     defaultUser = "darren";
     #nativeSystemd = true;
-
     wslConf = {
       automount = {
         enabled = true;

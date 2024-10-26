@@ -1,27 +1,24 @@
-{ pkgs, ... }:
+{ pkgs, myConfig, ... }:
 
 let
-  #userConfig = config3.user;
+  #userConfig = myConfig.user;
   #githubConfig = config3.github;
-  #systemConfig = config.system;
+  #systemConfig = myConfig.system;
   envType = (import ./lib/utils.nix { inherit (pkgs) lib; }).detectEnvironment;
+
 in
 {
-  /*
-    imports = [
-      ./modules/programs
-    ];
-  */
+  imports = [ ./modules/programs ];
 
   home = {
-    username = "darren";
+    username = myConfig.user.name;
     homeDirectory = "/home/darren";
     stateVersion = "24.05";
     sessionVariables.SHELL = "/etc/profiles/per-user/darren/bin/bash";
     packages = with pkgs; [
-      #${config.programs.terminal}
-      #${config.programs.editor}
-      git
+      #${myConfig.programs.terminal}
+      #${myConfig.programs.editor}
+      #git
       curl
       ripgrep
       fd
@@ -47,8 +44,8 @@ in
     # 환경 변수 설정
     /*
       sessionVariables = {
-        EDITOR = config.programs.editor;
-        VISUAL = config.programs.editor;
+        EDITOR = myConfig.programs.editor;
+        VISUAL = myConfig.programs.editor;
       };
     */
   };
@@ -56,20 +53,6 @@ in
 
   # 환경별 프로그램 설정
   # 프로그램 설정
-  programs = {
-    # Git 설정
-    git = {
-      enable = true;
-      userName = "darren_kim";
-      userEmail = "terdong@gmail.com";
-
-      extraConfig = {
-        init.defaultBranch = "main";
-        pull.rebase = true;
-        #github.user = "darren_kim";
-      };
-    };
-  };
   /*
     programs = {
       git = {

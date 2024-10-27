@@ -1,14 +1,25 @@
-{ pkgs, myConfig, ... }:
+{
+  #system,
+  pkgs,
+  myConfig,
+  #utils,
+  ...
+}:
 
 let
-  #userConfig = myConfig.user;
-  #githubConfig = config3.github;
-  #systemConfig = myConfig.system;
-  envType = (import ./lib/utils.nix { inherit (pkgs) lib; }).detectEnvironment;
-
 in
+#userConfig = myConfig.user;
+#githubConfig = config3.github;
+#systemConfig = myConfig.system;
+#envType = (import ./lib/utils.nix { inherit (pkgs) lib; }).detectEnvironment;
+
 {
-  imports = [ ./modules/programs ];
+  programs.home-manager.enable = true;
+
+  imports = [
+    ./modules/programs
+  ];
+
   home = {
     username = myConfig.user.name;
     homeDirectory = "/home/${myConfig.user.name}";
@@ -48,7 +59,6 @@ in
       };
     */
   };
-  programs.home-manager.enable = true;
 
   # 환경별 프로그램 설정
   # 프로그램 설정

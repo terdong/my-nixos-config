@@ -1,13 +1,22 @@
+{ nixos-wsl }:
 {
   pkgs,
   myConfig,
+  myUtils,
   ...
 }:
-
+let
+  platformConfig = if myUtils.isWSL then (import ./wsl { inherit nixos-wsl; }) else ./linux;
+  sys = myConfig.system;
+in
 {
-  system.stateVersion = myConfig.system.state_version;
-  time.timeZone = myConfig.system.time_zone;
-  networking.hostName = myConfig.system.host_name;
+  imports = [
+    platformConfig
+  ];
+
+  system.stateVersion = sys.state_version;
+  time.timeZone = sys.time_zone;
+  networking.hostName = sys.host_name;
 
   users = {
     defaultUserShell = pkgs.nushell;
@@ -32,7 +41,7 @@
       wget
       httpie
       #git
-      vim
+      #vim
       htop
       tmux
     ];

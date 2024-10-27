@@ -1,20 +1,42 @@
 
-[user]
-name = "darren"
-email = "your.email@example.com"
-full_name = "Darren Kim"
-
 [system]
 name = "x86_64-linux"    #variations: x86_64-linux, x86_64-darwin, aarch64-linux, aarch64-darwin
 time_zone = "Asia/Seoul"
 host_name = "nixos"
 state_version = "24.05"
 
+[user]
+name = "darren"
+email = "your.email@example.com"
+full_name = "Darren Kim"
+
 [programs]
 terminal = "alacritty"
 #editor = "vim"
-vscode_path = "/mnt/c/Users/USERNAME/AppData/Local/Programs/Microsoft VS Code/Code.exe"
-github_token = "your-github-token"
+# vscode_path for wsl
+vscode_path = "/mnt/c/Users/darren/AppData/Local/Programs/Microsoft VS Code/bin"
+#github_token = "your-github-token"
 
 [ssh]
 keys = ["ssh-ed25519 AAAA... your@email.com"]
+
+
+# [user]
+# name = "your name"
+# email = "your.email@example.com"
+# full_name = "your full name"
+
+# [system]
+# name = "x86_64-linux"    #variations: x86_64-linux, x86_64-darwin, aarch64-linux, aarch64-darwin
+# time_zone = "Asia/Seoul"
+# host_name = "nixos"
+# state_version = "24.05"
+
+# [programs]
+# terminal = "alacritty"
+# #editor = "vim"
+# vscode_path = "/mnt/c/Users/USERNAME/AppData/Local/Programs/Microsoft VS Code/bin"
+# github_token = "your-github-token"
+
+# [ssh]
+# keys = ["ssh-ed25519 AAAA... your@email.com"]

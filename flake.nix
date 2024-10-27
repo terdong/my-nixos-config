@@ -11,6 +11,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     #flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -21,41 +25,54 @@
       home-manager,
       #flake-utils,
       nixos-wsl,
-    }@inputs:
+      nixvim,
+    }:
     let
       myConfig = builtins.fromTOML (builtins.readFile ./my-config.toml);
       system = myConfig.system.name;
       pkgs = nixpkgs.legacyPackages.${system};
-      utils = import ./lib/utils.nix { inherit pkgs; };
+      myUtils = import ./lib/my-utils.nix { inherit pkgs; };
 
-      platformConfig =
-        if utils.isWSL then
-          (import ./hosts/wsl/default.nix { inherit nixos-wsl; })
-        else
-          ./hosts/linux/default.nix;
+      /*
+        platformConfig =
+             if utils.isWSL then
+               (import ./hosts/wsl/default.nix { inherit nixos-wsl; })
+             else
+               ./hosts/linux/default.nix;
+      */
 
     in
     {
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         inherit system;
-
+        #inherit specialArgs;
         specialArgs = {
           inherit myConfig;
-          #inherit utils;
+          inherit myUtils;
         };
-        #imports = [ ./modules/programs ];
+
         modules = [
-          ./hosts/common/default.nix
-          platformConfig
+          (import ./hosts { inherit nixos-wsl; })
+          #(import ./hosts/wsl/default.nix { inherit nixos-wsl; })
+          /*
+            (import ./hosts {
+              inherit nixos-wsl pkgs;
+              #inherit specialArgs;
+              inherit (specialArgs) myConfig utils;
+            })
+          */
+          #./hosts
+          #platformConfig
           home-manager.nixosModules.home-manager
           {
             home-manager = {
               extraSpecialArgs = {
                 inherit myConfig;
+                inherit nixvim;
               };
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.${myConfig.user.name} = ./home.nix;
+              users.${myConfig.user.name} = ./home;
             };
 
             # Optionally, use home-manager.extraSpecialArgs to pass

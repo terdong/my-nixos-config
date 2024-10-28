@@ -12,6 +12,7 @@ in
 {
   imports = [
     platformConfig
+    ./aliases.nix
   ];
 
   system.stateVersion = sys.state_version;
@@ -34,23 +35,8 @@ in
   };
 
   environment = {
-    sessionVariables = {
-      las = "ls -al";
-      #  nrsf = "nixos-rebuild switch --flake";
-    };
-    # sessionVariables = {
-    #   GITHUB_TOKEN = myConfig.github.token;
-    # };
-
-    #todo: 정리
     systemPackages = with pkgs; [
       nixfmt-rfc-style
-      wget
-      httpie
-      htop
-      #git
-      #vim
-      #tmux
     ];
   };
 

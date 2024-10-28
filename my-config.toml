@@ -1,4 +1,3 @@
-
 [system]
 name = "x86_64-linux"    #variations: x86_64-linux, x86_64-darwin, aarch64-linux, aarch64-darwin
 time_zone = "Asia/Seoul"
@@ -7,31 +6,12 @@ state_version = "24.05"
 shell = "zsh"            #Before change this, you should add exact programs to ./home/modules/program/${shell} what you choosed shell. By default, "zsh" and "nu" are generated.
 
 [user]
-name = "darren"
+name = "your name"
 email = "your.email@example.com"
-full_name = "Darren Kim"
-extra_paths = []
+full_name = "your full name"
 
 [programs]
-vscode_path = "/mnt/c/Users/darren/AppData/Local/Programs/Microsoft VS Code/bin" # vscode_path for wsl
+vscode_path = "/mnt/c/Users/USERNAME/AppData/Local/Programs/Microsoft VS Code/bin" # vscode_path for wsl
 
 [ssh]
-private_key_path = "/mnt/c/Users/darren/.ssh/id_rsa"
-
-# [system]
-# name = "x86_64-linux"    #variations: x86_64-linux, x86_64-darwin, aarch64-linux, aarch64-darwin
-# time_zone = "Asia/Seoul"
-# host_name = "nixos"
-# state_version = "24.05"
-
-# [user]
-# name = "your name"
-# email = "your.email@example.com"
-# full_name = "your full name"
-
-# [programs]
-# vscode_path for wsl
-# vscode_path = "/mnt/c/Users/USERNAME/AppData/Local/Programs/Microsoft VS Code/bin"
-
-#[ssh]
-#private_key_path = "/mnt/c/Users/USERNAME/.ssh/id_rsa"
+private_key_path = "/mnt/c/Users/USERNAME/.ssh/id_rsa"

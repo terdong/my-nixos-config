@@ -43,8 +43,10 @@
 
         modules = [
           (import ./hosts { inherit nixos-wsl; })
+
           home-manager.nixosModules.home-manager
           {
+
             home-manager = {
               extraSpecialArgs = {
                 inherit self;
@@ -56,9 +58,6 @@
               backupFileExtension = "backup";
               users.${myConfig.user.name} = ./home;
             };
-
-            # Optionally, use home-manager.extraSpecialArgs to pass
-            # arguments to home.nix
           }
         ];
       };

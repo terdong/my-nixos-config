@@ -1,14 +1,11 @@
 { pkgs, myConfig, ... }:
 
 {
-  # home.packages = with pkgs; [
-  #   git
-  # ];
-
   programs.zsh = {
     enable = true;
-    enableAutosuggestions = true;
-    enableSyntaxHighlighting = true;
+
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
 
     oh-my-zsh = {
       enable = true;
@@ -19,6 +16,10 @@
         "node"
         "npm"
       ];
+    };
+
+    shellAliases = {
+      refresh = "source $HOME/.zshrc";
     };
 
     /*

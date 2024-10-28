@@ -7,7 +7,6 @@
 }:
 {
   imports = [ nixos-wsl.nixosModules.default ];
-  #system.stateVersion = "24.05";
 
   wsl = {
     enable = true;
@@ -46,7 +45,6 @@
       #nixfmt-rfc-style
       #windows-terminal
     ];
-
   };
 
   # WSL 특화 설정

@@ -12,3 +12,7 @@ nix/store/
 .idea/
 
 .history
+
+#only directory
+!/secrets/
+/secrets/*

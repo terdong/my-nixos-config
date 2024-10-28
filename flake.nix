@@ -23,29 +23,19 @@
       self,
       nixpkgs,
       home-manager,
-      #flake-utils,
       nixos-wsl,
       nixvim,
+    #flake-utils,
     }:
     let
       myConfig = builtins.fromTOML (builtins.readFile ./my-config.toml);
       system = myConfig.system.name;
       pkgs = nixpkgs.legacyPackages.${system};
       myUtils = import ./lib/my-utils.nix { inherit pkgs; };
-
-      /*
-        platformConfig =
-             if utils.isWSL then
-               (import ./hosts/wsl/default.nix { inherit nixos-wsl; })
-             else
-               ./hosts/linux/default.nix;
-      */
-
     in
     {
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         inherit system;
-        #inherit specialArgs;
         specialArgs = {
           inherit myConfig;
           inherit myUtils;
@@ -53,25 +43,17 @@
 
         modules = [
           (import ./hosts { inherit nixos-wsl; })
-          #(import ./hosts/wsl/default.nix { inherit nixos-wsl; })
-          /*
-            (import ./hosts {
-              inherit nixos-wsl pkgs;
-              #inherit specialArgs;
-              inherit (specialArgs) myConfig utils;
-            })
-          */
-          #./hosts
-          #platformConfig
           home-manager.nixosModules.home-manager
           {
             home-manager = {
               extraSpecialArgs = {
+                inherit self;
                 inherit myConfig;
                 inherit nixvim;
               };
               useGlobalPkgs = true;
               useUserPackages = true;
+              backupFileExtension = "backup";
               users.${myConfig.user.name} = ./home;
             };
 

@@ -1,10 +1,9 @@
-{ ... }:
+{ myConfig, ... }:
 
 {
   imports = [
-    ./git.nix
-    ./nushell.nix
-    ./nixvim.nix
-    #./zsh.nix
+    ./git
+    ./nixvim
+    ./${myConfig.system.shell}
   ];
 }

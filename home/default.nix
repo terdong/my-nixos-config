@@ -1,30 +1,43 @@
 {
   #system,
+  self,
   pkgs,
   myConfig,
+  config,
   #utils,
   ...
 }:
 
 let
+  flakeRoot = self.outPath;
+  userName = myConfig.user.name;
 in
 #userConfig = myConfig.user;
 #githubConfig = config3.github;
 #systemConfig = myConfig.system;
 #envType = (import ./lib/utils.nix { inherit (pkgs) lib; }).detectEnvironment;
-
+#shouldCreateFile = builtins.pathExists "${flakeRoot}/secrets/id_rsa.pub";
 {
   programs.home-manager.enable = true;
-
   imports = [
     ./modules/programs
   ];
 
   home = {
-    username = myConfig.user.name;
-    homeDirectory = "/home/${myConfig.user.name}";
+    username = userName;
+    homeDirectory = "/home/${userName}";
     stateVersion = myConfig.system.state_version;
-    sessionVariables.SHELL = "/etc/profiles/per-user/darren/bin/nu";
+    sessionVariables.SHELL = "/etc/profiles/per-user/${userName}/bin/${myConfig.system.shell}";
+    file = {
+      ".ssh/dummy" = {
+        text = "dummy";
+        onChange = "
+        cp -rf ${myConfig.ssh.private_key_path} $HOME/.ssh/id_rsa
+        chmod 600 $HOME/.ssh/id_rsa
+        ";
+      };
+    };
+
     packages = with pkgs; [
       #${myConfig.programs.terminal}
       #${myConfig.programs.editor}

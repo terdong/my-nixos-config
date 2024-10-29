@@ -6,8 +6,8 @@ state_version = "24.05"  #NixOS Version
 shell = "zsh"            #Before change this, you should add exact programs to ./home/modules/program/${shell} what you choosed shell like "fish". By default, "zsh" and "nu" are supported.
 
 [user]
-name = "your name"               #For user and home directory
-full_name = "your full name"     #For git user name
+name = "your_name"               #For user and home directory
+full_name = "your_full_name"     #For git user name
 email = "your.email@example.com" #For git user email
 
 [programs]

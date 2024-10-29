@@ -42,7 +42,7 @@
         };
 
         modules = [
-          (import ./hosts { inherit nixos-wsl; })
+          (import ./nixos { inherit nixos-wsl; })
 
           home-manager.nixosModules.home-manager
           {

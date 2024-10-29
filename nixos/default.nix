@@ -6,13 +6,14 @@
   ...
 }:
 let
-  platformConfig = if myUtils.isWSL then (import ./wsl { inherit nixos-wsl; }) else ./linux;
+  platformConfig =
+    if myUtils.isWSL then (import ./platforms/wsl { inherit nixos-wsl; }) else ./platforms/linux;
   sys = myConfig.system;
 in
 {
   imports = [
     platformConfig
-    ./aliases.nix
+    ./modules/aliases.nix
   ];
 
   system.stateVersion = sys.state_version;

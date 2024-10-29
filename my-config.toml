@@ -2,16 +2,16 @@
 name = "x86_64-linux"    #variations: x86_64-linux, x86_64-darwin, aarch64-linux, aarch64-darwin
 time_zone = "Asia/Seoul"
 host_name = "nixos"
-state_version = "24.05"
-shell = "zsh"            #Before change this, you should add exact programs to ./home/modules/program/${shell} what you choosed shell. By default, "zsh" and "nu" are generated.
+state_version = "24.05"  #NixOS Version
+shell = "zsh"            #Before change this, you should add exact programs to ./home/modules/program/${shell} what you choosed shell like "fish". By default, "zsh" and "nu" are supported.
 
 [user]
-name = "your name"
-email = "your.email@example.com"
-full_name = "your full name"
+name = "your name"               #For user and home directory
+full_name = "your full name"     #For git user name
+email = "your.email@example.com" #For git user email
 
 [programs]
 vscode_path = "/mnt/c/Users/USERNAME/AppData/Local/Programs/Microsoft VS Code/bin" # vscode_path for wsl
 
 [ssh]
-private_key_path = "/mnt/c/Users/USERNAME/.ssh/id_rsa"
+private_key_path = "/mnt/c/Users/USERNAME/.ssh/id_rsa" #Do not place the file in this project.

@@ -12,7 +12,7 @@ in
 {
   programs.home-manager.enable = true;
   imports = [
-    ./modules/programs
+    ./programs
   ];
 
   home = {

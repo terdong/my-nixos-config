@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 
 {
-  # 부트로더 설정
+  # Bootloader settings
   boot = {
     loader = {
       systemd-boot.enable = true;
@@ -9,7 +9,7 @@
     };
   };
 
-  # 네트워킹 설정
+  # Networking settings
   networking = {
     networkmanager.enable = true;
     firewall = {
@@ -22,7 +22,7 @@
     };
   };
 
-  # X11/Wayland 설정
+  # X11/Wayland settings
   services = {
     xserver = {
       enable = true;
@@ -30,21 +30,20 @@
       desktopManager.gnome.enable = true;
     };
 
-    # 프린터 지원
-    printing.enable = true;
+    # Printer support
+    #printing.enable = true;
 
-    # 블루투스 지원
+    # Bluetooth support
     #bluetooth.enable = true;
   };
 
-  # 오디오 설정
-  #sound.enable = true;
-  #hardware = {
-  #  pulseaudio.enable = true;
-  #bluetooth.enable = true;
-  #};
+  # Audio settings
+  sound.enable = true;
+  hardware = {
+    pulseaudio.enable = true;
+  };
 
-  # 추가 패키지
+  # Additional packages
   environment.systemPackages = with pkgs; [
     firefox
     thunderbird

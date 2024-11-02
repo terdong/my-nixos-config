@@ -1,13 +1,9 @@
-{ nixvim, ... }:
+{ pkgs-unstable, nixvim, ... }:
 {
-  imports = [ nixvim.homeManagerModules.nixvim ];
-  programs.nixvim = {
-    enable = true;
-
-    colorschemes.catppuccin.enable = true;
-    plugins.lualine.enable = true;
-  };
-  home.shellAliases = {
-    vi = "nvim";
+  home = {
+    packages = with pkgs-unstable; [ nixvim.packages.${system}.default ];
+    shellAliases = {
+      vi = "nvim";
+    };
   };
 }

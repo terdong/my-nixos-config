@@ -2,7 +2,7 @@
 {
   environment.shellAliases = {
     nrf = "sudo nixos-rebuild switch --flake";
-    nrfd = "nrsf .";
+    nrfd = "nrf .";
     nfc = "nix flake check";
     nfcd = "nfc .";
   };

@@ -12,15 +12,11 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixvim = {
-      url = "github:mikaelfangel/nixvim-config";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-    # nixvim = {
-    #   url = "github:nix-community/nixvim";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
 
+    # nixvim = {
+    #   url = "github:mikaelfangel/nixvim-config";
+    #   inputs.nixpkgs.follows = "nixpkgs-unstable";
+    # };
     #flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -31,8 +27,8 @@
       nixpkgs-unstable,
       home-manager,
       nixos-wsl,
-      nixvim,
-    #flake-utils,
+      #nixvim,
+      #flake-utils,
     }:
     let
       myConfig = builtins.fromTOML (builtins.readFile ./my-config.toml);
@@ -58,57 +54,63 @@
 
         modules = [
           (import ./nixos { inherit nixos-wsl; })
-
           home-manager.nixosModules.home-manager
           {
             home-manager = {
               extraSpecialArgs = {
                 inherit pkgs-unstable;
                 inherit myConfig;
-                inherit nixvim;
+                #inherit nixvim;
                 #inherit self;
               };
               useGlobalPkgs = true;
               useUserPackages = true;
               users.${userName} = ./home;
             };
-
             system.activationScripts.copyConfigToHome = {
               deps = [ "users" ];
               text = ''
                 NIXOS_PATH="${myConfig.nixos.config_path}"
-
-                if [ ! -d $NIXOS_PATH ]; then
-                  exit 1
-                fi
-
-                SUDO_USER=${userName}
                 BACKUP_DIR_NAME="${myConfig.nixos.backup_config_directory_name}"
+                SUDO_USER=${userName}
+
                 # Get the current user's home directory
                 USER_HOME="/home/$SUDO_USER"
                 if [ -z "$SUDO_USER" ]; then
                   USER_HOME=$HOME
                 fi
 
-                mkdir -p $USER_HOME/.dotfiles
-                chown "$SUDO_USER:users" $USER_HOME/.dotfiles
+                DOTFILES_PATH="$USER_HOME/.dotfiles"
+                DESTINATION_PATH="$DOTFILES_PATH/$BACKUP_DIR_NAME"
 
-                mkdir -p $USER_HOME/.config
-                chown "$SUDO_USER:users" $USER_HOME/.config
+                if [ ! -d $DESTINATION_PATH ] && [ -d $NIXOS_PATH ]; then
 
-                DESTINATION="$USER_HOME/.dotfiles/$BACKUP_DIR_NAME"
-                DESTINATION_FOR_LINK="$USER_HOME/.config/$BACKUP_DIR_NAME"
+                  if [ ! -d $DOTFILES_PATH ]; then
+                    mkdir -p $DOTFILES_PATH
+                    chown $SUDO_USER:users $DOTFILES_PATH
+                  fi
 
-                # Create backup directory if it doesn't exist
-                mkdir -p $DESTINATION
+                  HOME_CONFIG_PATH="$USER_HOME/.config"
 
-                # Copy configuration files
-                cp -r $NIXOS_PATH/* $DESTINATION
-                chown -R "$SUDO_USER:users" $DESTINATION || true
+                  if [ ! -d $HOME_CONFIG_PATH ]; then
+                    mkdir -p $HOME_CONFIG_PATH
+                    chown $SUDO_USER:users $HOME_CONFIG_PATH
+                  fi
 
-                # Create symlink in .config for easier access (optional)
-                mkdir -p "$USER_HOME/.config"
-                ln -sfn $DESTINATION $DESTINATION_FOR_LINK || true
+                  DESTINATION_FOR_LINK="$HOME_CONFIG_PATH/$BACKUP_DIR_NAME"
+
+                  # Create backup directory if it doesn't exist
+                  mkdir -p $DESTINATION_PATH
+
+                  # Copy configuration files
+                  cd $NIXOS_PATH
+                  cp -rf . $DESTINATION_PATH
+                  cd ..
+                  chown -R $SUDO_USER:users $DESTINATION_PATH
+
+                  #Create symlink in .config for easier access (optional)
+                  ln -sfn $DESTINATION_PATH $DESTINATION_FOR_LINK || true
+                fi
               '';
             };
           }

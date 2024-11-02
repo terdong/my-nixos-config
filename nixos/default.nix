@@ -19,6 +19,7 @@ in
   system.stateVersion = sys.state_version;
   time.timeZone = sys.time_zone;
   networking.hostName = sys.host_name;
+  i18n.defaultLocale = "en_US.UTF-8";
 
   users = {
     defaultUserShell = pkgs.${myConfig.system.shell};

@@ -1,5 +1,5 @@
 [system]
-name = "x86_64-linux"    #variations: x86_64-linux, x86_64-darwin, aarch64-linux, aarch64-darwin
+name = "x86_64-linux"    #Variations: x86_64-linux, x86_64-darwin, aarch64-linux, aarch64-darwin
 time_zone = "Asia/Seoul"
 host_name = "nixos"
 state_version = "24.05"  #NixOS Version
@@ -11,7 +11,12 @@ full_name = "your_full_name"     #For git user name
 email = "your.email@example.com" #For git user email
 
 [programs]
-vscode_path = "/mnt/c/Users/USERNAME/AppData/Local/Programs/Microsoft VS Code/bin" # vscode_path for wsl
+vscode_path = "/mnt/c/Users/your_name/AppData/Local/Programs/Microsoft VS Code/bin" #Vscode_path for wsl
 
 [ssh]
-private_key_path = "/mnt/c/Users/USERNAME/.ssh/id_rsa" #Do not place the file in this project.
+enabled = false                                         #Change to true to enable the ssh key copy feature.
+private_key_path = "/mnt/c/Users/your_name/.ssh/id_rsa" #Do not place the file in this project.
+
+[nixos]
+config_path = "/tmp/my-nixos-config"   #Path to the original nixos config directory to copy it to user home. If you want to continue with your nixos settings from the user home, this key must be filled in.
+backup_config_directory_name = "nixos" #Directory name to change from my-nixos-config

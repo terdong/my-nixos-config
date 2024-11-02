@@ -13,7 +13,6 @@
     extraConfig = {
       init.defaultBranch = "main";
       pull.rebase = true;
-      #github.user = githubConfig.username;
     };
   };
 }

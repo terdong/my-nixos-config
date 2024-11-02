@@ -36,6 +36,7 @@ in
       };
     };
 
+    #Set packages for your session.
     packages = with pkgs; [
       wget
       # curl
@@ -48,8 +49,11 @@ in
       # tmux
     ];
 
+    #Set aliases for user session.
     # shellAliases = {
     # };
+
+    #Set environment variables for user session.
     # sessionVariables = {
     # };
   };

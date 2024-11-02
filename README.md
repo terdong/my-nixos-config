@@ -4,10 +4,6 @@
 
 This repository provides a simple and modular Nix Flake setup for configuring a NixOS system and Home Manager. It’s designed to make managing a NixOS system with user-specific configurations more scalable and reproducible.
 
-## Notes
-
-- This does not support macOS. Because I do not have a Mac.
-
 ## Features
 
 * [x] NixOS system configuration
@@ -16,8 +12,8 @@ This repository provides a simple and modular Nix Flake setup for configuring a 
 * [x] Supports private ssh key via ssh.private_key_path in my-coinfig.toml
 * [ ] Supports Direnv(nix-direnv)
 * [ ] Supports win32yank for clipboard sync
-* [ ] Supports Linux
 * [ ] Supports Docker
+* [ ] Supports Linux
 * [ ] More useful packages
 
 ## Requirements
@@ -36,23 +32,24 @@ This repository provides a simple and modular Nix Flake setup for configuring a 
 
 ### 0. Let's proceed assuming that you are in the shell such as bash of NixOS.
 
-### 1. Install Git, Vim on nix-shell
+### 1. Enable experimental features for Flakes
+The following settings are required to use the commands below.
+```bash
+export NIX_CONFIG="experimental-features = nix-command flakes"
+```
+
+### 2. Install Git, Vim on nix shell
 
 Since git and vim are not installed on NixOS-WSL, install them in the nix-shell environment.
 ```bash
-nix-shell -p git vim
+nix shell nixpkgs#git nixpkgs#vim
 ```
-### 2. Clone the Repository
+### 3. Clone the Repository
 
 ```bash
-git clone https://github.com/terdong/my-nix-flake-config
-cd my-nix-flake-config
-```
-
-### 3. Enable experimental features for Flakes
-
-```bash
-export NIX_CONFIG="experimental-features = nix-command flakes"
+cd /tmp #or wherever you want
+git clone https://github.com/terdong/my-nixos-config
+cd my-nixos-config
 ```
 
 ### 4. Edit your settings in ./my-config.toml
@@ -62,7 +59,7 @@ vi my-config.toml
 - <ins>_**It must be changed, especially:**_</ins>
   ```toml
   [user]
-  name = "your_name" #<- Change it to whatever name you want.
+  name = "YOUR_NAME" #<- Change it to whatever name you want.
   ```
 
 ### 5. Initialize NixOS with Flakes
@@ -83,10 +80,11 @@ sudo nixos-rebuild switch --flake .
 ### Project Structure
 ```plaintext
 
-my-nix-flake-config/
+my-nixos-config/
 ├── home/                  # User-specific Home Manager configurations
 │   └── programs/          # Individual program configurations for Home Manager
 │       ├── git/
+│       ├── vim/           # default
 │       ├── nixvim/
 │       ├── nu/
 │       └── zsh/
@@ -107,6 +105,30 @@ my-nix-flake-config/
 - When you import a directory from .nix file, the default.nix file in that directory is automatically read.
 
 ## Tips
+- Currently only wget is enabled. You can add as many as you want here if you need.
+  ```nix
+  #./home/default.nix
+    #Set packages for your session.
+    packages = with pkgs; [
+      wget
+      # curl
+      # ripgrep
+      # fd
+      # tree
+      # jq
+      # httpie
+      # htop
+      # tmux
+    ];
+
+    #Set aliases for user session.
+    # shellAliases = {
+    # };
+
+    #Set environment variables for user session.
+    # sessionVariables = {
+    # };
+  ```
 - Global aliases can be added in ./nixos/modules/aliases.nix , and home aliases can be added for a config file of each shell , such as ./home/programs/zsh/default.nix.
   ```nix
   # ./nixos/modules/aliases.nix
@@ -142,9 +164,8 @@ my-nix-flake-config/
   sudo nixos-rebuild switch --flake .
   #or
   # specific path
-  sudo nixos-rebuild switch --flake ./my-nix-flake-config
+  sudo nixos-rebuild switch --flake ./my-nixos-config
   ```
-- (not yet)~~Rebuilding Home Manager: home-manager switch --flake .~~
 
 ## Troubleshooting
 - Permissions: Ensure you have the correct permissions for the files and directories.
@@ -152,13 +173,19 @@ my-nix-flake-config/
 - Nix Commands: If Flake commands don’t work, confirm experimental-features = nix-command flakes is set in your Nix config.
 - If you run "nixos-rebuild switch --flake ." and it says 'No such file or directory', Run "git add *"
 - On Linux not WSL: As mentioned earlier, it has not been tested in a general Linux environment, but it is expected that there will be no problem if "./nixos/platforms/linux/default.nix" is ​​set properly.
-- After the first rebuild switch, you may see an error message like this. So far, there doesn't seem to be any critical issues.
-  ```bash
-  Error: Failed to open dbus connection
 
-  Caused by:
-      Failed to connect to socket /run/user/1000/bus: Connection refused
-  ```
+<details>
+    <summary>Fixed issues</summary>
+
+  - ~~After the first rebuild switch, you may see an error message like this. So far, there doesn't seem to be any critical issues.~~
+    ```bash
+    Error: Failed to open dbus connection
+
+    Caused by:
+        Failed to connect to socket /run/user/1000/bus: Connection refused
+    ```
+  </details>
+
 
 ## Known Issues
 - After the first rebuild in nix-shell, any previously set projects or configuration file(my-config.toml) must be moved to user home.

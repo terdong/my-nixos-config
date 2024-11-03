@@ -10,7 +10,7 @@ This repository provides a simple and modular Nix Flake setup for configuring a 
 * [x] Home Manager integration for user environments
 * [x] Managing settings via external file(my-config.toml)
 * [x] Supports private ssh key via ssh.private_key_path in my-coinfig.toml
-* [ ] Supports Direnv(nix-direnv)
+* [x] Supports Direnv(nix-direnv)
 * [ ] Supports win32yank for clipboard sync
 * [ ] Supports Docker
 * [ ] Supports Linux

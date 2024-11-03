@@ -61,7 +61,6 @@
                 inherit pkgs-unstable;
                 inherit myConfig;
                 #inherit nixvim;
-                #inherit self;
               };
               useGlobalPkgs = true;
               useUserPackages = true;

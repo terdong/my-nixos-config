@@ -2,17 +2,14 @@
   pkgs,
   pkgs-unstable,
   myConfig,
-  #self,
   ...
 }:
 
 let
   userName = myConfig.user.name;
   ssh = myConfig.ssh;
-#flakeRoot = self.outPath;
 in
 {
-  programs.home-manager.enable = true;
   imports = [ ./programs ];
 
   home = {

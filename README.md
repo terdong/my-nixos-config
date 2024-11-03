@@ -185,7 +185,3 @@ my-nixos-config/
         Failed to connect to socket /run/user/1000/bus: Connection refused
     ```
   </details>
-
-
-## Known Issues
-- After the first rebuild in nix-shell, any previously set projects or configuration file(my-config.toml) must be moved to user home.

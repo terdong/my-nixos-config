@@ -29,8 +29,7 @@ in
         "wheel"
         "networkmanager"
       ];
-      #shell = pkgs.zsh;
-      # openssh.authorizedKeys.keys = myConfig.ssh.keys;
+      #shell = pkgs.${myConfig.system.shell}; # personal
       ignoreShellProgramCheck = true;
     };
     users.root.ignoreShellProgramCheck = true;
@@ -41,16 +40,6 @@ in
       nixfmt-rfc-style
     ];
   };
-
-  # services = {
-  #   openssh = {
-  #     enable = true;
-  #     settings = {
-  #       PermitRootLogin = "no";
-  #       PasswordAuthentication = false;
-  #     };
-  #   };
-  # };
 
   nix.settings.experimental-features = [
     "nix-command"

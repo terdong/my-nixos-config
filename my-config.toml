@@ -6,16 +6,17 @@ state_version = "24.05"  #NixOS Version
 shell = "zsh"            #Before change this, you should add exact programs to ./home/modules/program/${shell} what you choosed shell like "fish". By default, "zsh" and "nu" are supported.
 
 [user]
-name = "your_name"               #For user and home directory
+name = "YOUR_NAME"               #For user and home directory
 full_name = "your_full_name"     #For git user name
 email = "your.email@example.com" #For git user email
 
 [programs]
-vscode_path = "/mnt/c/Users/your_name/AppData/Local/Programs/Microsoft VS Code/bin" #Vscode_path for wsl
+vscode_path = ""    #Vscode_path for wsl such as "/mnt/c/Users/YOUR_NAME/AppData/Local/Programs/Microsoft VS Code/bin"
+win32yank_path = "" # Change to such as "/mnt/c/Users/YOUR_NAME/scoop/apps/win32yank/0.1.1" after installing win32yank on windows somehow.
 
 [ssh]
 enabled = false                                         #Change to true to enable the ssh key copy feature.
-private_key_path = "/mnt/c/Users/your_name/.ssh/id_rsa" #Do not place the file in this project.
+private_key_path = "/mnt/c/Users/YOUR_NAME/.ssh/id_rsa" #Do not place the file in this project.
 
 [nixos]
 config_path = "/tmp/my-nixos-config"   #Path to the original nixos config directory to copy it to user home. If you want to continue with your nixos settings from the user home, this key must be filled in.

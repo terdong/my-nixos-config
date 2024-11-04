@@ -36,14 +36,14 @@ in
     #Set packages for your session.
     packages = with pkgs; [
       wget
-      # curl
-      # ripgrep
-      # fd
-      # tree
-      # jq
-      # httpie
-      # htop
-      # tmux
+      curl
+      ripgrep
+      tree
+      jq
+      httpie
+      htop
+      fd
+      tmux
     ];
 
     #Set aliases for user session.

@@ -11,7 +11,7 @@ This repository provides a simple and modular Nix Flake setup for configuring a 
 * [x] Managing settings via external file(my-config.toml)
 * [x] Supports private ssh key via ssh.private_key_path in my-coinfig.toml
 * [x] Supports Direnv(nix-direnv)
-* [ ] Supports win32yank for clipboard sync
+* [x] Supports win32yank for clipboard sync
 * [ ] Supports Docker
 * [ ] Supports Linux
 * [ ] More useful packages
@@ -84,10 +84,10 @@ my-nixos-config/
 ├── home/                  # User-specific Home Manager configurations
 │   └── programs/          # Individual program configurations for Home Manager
 │       ├── git/
-│       ├── vim/           # default
+│       ├── vim/           # Default
 │       ├── nixvim/
 │       ├── nu/
-│       └── zsh/
+│       └── zsh/           # Default
 ├── lib/                   # Directory for utility functions and shared libraries
 │   └── my-utils.nix
 ├── nixos/                 # NixOS system-level configurations
@@ -105,20 +105,20 @@ my-nixos-config/
 - When you import a directory from .nix file, the default.nix file in that directory is automatically read.
 
 ## Tips
-- Currently only wget is enabled. You can add as many as you want here if you need.
+- You can add as many as you want here if you need.
   ```nix
   #./home/default.nix
     #Set packages for your session.
     packages = with pkgs; [
       wget
-      # curl
-      # ripgrep
-      # fd
-      # tree
-      # jq
-      # httpie
-      # htop
-      # tmux
+      curl
+      ripgrep
+      tree
+      jq
+      httpie
+      htop
+      fd
+      tmux
     ];
 
     #Set aliases for user session.
@@ -134,9 +134,11 @@ my-nixos-config/
   # ./nixos/modules/aliases.nix
   environment.shellAliases = {
     nrf = "sudo nixos-rebuild switch --flake";
-    nrfd = "nrsf .";
+    nrfd = "nrf .";
     nfc = "nix flake check";
     nfcd = "nfc .";
+    npull = "pushd /home/${myConfig.user.name}/.dotfiles/${myConfig.nixos.backup_config_directory_name} && git stash push my-config.toml && git pull --rebase && git stash pop && popd";
+    nupdate = "nrf /home/${myConfig.user.name}/${myConfig.nixos.backup_config_directory_name}";
   };
 
   #./home/programs/zsh/default.nix
@@ -173,6 +175,13 @@ my-nixos-config/
 - Nix Commands: If Flake commands don’t work, confirm experimental-features = nix-command flakes is set in your Nix config.
 - If you run "nixos-rebuild switch --flake ." and it says 'No such file or directory', Run "git add *"
 - On Linux not WSL: As mentioned earlier, it has not been tested in a general Linux environment, but it is expected that there will be no problem if "./nixos/platforms/linux/default.nix" is ​​set properly.
+- my-config.toml: Nix follows the principle of purity. Therefore, it cannot create an impurity situation where it loads external files or newly added files, so it has no choice but to manage files as they are. If you want to update to the latest version from github, I recommend using the simple and convenient "npull" alias(assuming only my-config.toml has changed).
+- How to fix a clipboard not working in WSL environment:
+  ```toml
+  #./my-config.toml
+  [programs]
+  win32yank_path ="" # Change to the path such as /mnt/c/Users/YOUR_NAME/scoop/apps/win32yank/0.1.1 after installing win32yank on windows somehow.
+  ```
 
 <details>
     <summary>Fixed issues</summary>

@@ -41,7 +41,7 @@
       };
     */
 
-    extraInit = ''export PATH="$PATH:${myConfig.programs.vscode_path}"'';
+    extraInit = ''export PATH="$PATH:${myConfig.programs.vscode_path}:${myConfig.programs.win32yank_path}"'';
     systemPackages = with pkgs; [
       wslu
       wsl-open

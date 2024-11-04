@@ -11,6 +11,7 @@ This repository provides a simple and modular Nix Flake setup for configuring a 
 * [x] Managing settings via external file(my-config.toml)
 * [x] Supports private ssh key via ssh.private_key_path in my-coinfig.toml
 * [x] Supports Direnv(nix-direnv)
+* [x] Supports VS Code for WSL
 * [x] Supports win32yank for clipboard sync
 * [ ] Supports Docker
 * [ ] Supports Linux
@@ -137,8 +138,8 @@ my-nixos-config/
     nrfd = "nrf .";
     nfc = "nix flake check";
     nfcd = "nfc .";
-    npull = "pushd /home/${myConfig.user.name}/.dotfiles/${myConfig.nixos.backup_config_directory_name} && git stash push my-config.toml && git pull --rebase && git stash pop && popd";
-    nupdate = "nrf /home/${myConfig.user.name}/${myConfig.nixos.backup_config_directory_name}";
+    npull = "pushd /home/${myConfig.user.name}/.dotfiles/${myConfig.nixos.bkp_conf_dir_name} && git stash push my-config.toml && git pull --rebase && git stash pop && popd";
+    nupdate = "nrf /home/${myConfig.user.name}/${myConfig.nixos.bkp_conf_dir_name}";
   };
 
   #./home/programs/zsh/default.nix
@@ -180,13 +181,13 @@ my-nixos-config/
   ```toml
   #./my-config.toml
   [programs]
-  win32yank_path ="" # Change to the path such as /mnt/c/Users/YOUR_NAME/scoop/apps/win32yank/0.1.1 after installing win32yank on windows somehow.
+  win32yank_path ="" # Change to the path such as "/mnt/c/Users/YOUR_NAME/scoop/apps/win32yank/0.1.1" after installing win32yank on windows somehow.
   ```
 
 <details>
     <summary>Fixed issues</summary>
 
-  - ~~After the first rebuild switch, you may see an error message like this. So far, there doesn't seem to be any critical issues.~~
+  - ~~After the first rebuild switch, you may see an error message like this. So far, there doesn't seem to be any critical issues.~~ This problem occurs when the base version of nixpkgs does not match the OS version (e.g. unstable).
     ```bash
     Error: Failed to open dbus connection
 

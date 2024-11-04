@@ -5,7 +5,7 @@
     nrfd = "nrf .";
     nfc = "nix flake check";
     nfcd = "nfc .";
-    npull = "pushd /home/${myConfig.user.name}/.dotfiles/${myConfig.nixos.backup_config_directory_name} && git stash push my-config.toml && git pull --rebase && git stash pop && popd";
-    nupdate = "nrf /home/${myConfig.user.name}/.dotfiles/${myConfig.nixos.backup_config_directory_name}";
+    npull = "pushd /home/${myConfig.user.name}/.dotfiles/${myConfig.nixos.bkp_conf_dir_name} && git stash push my-config.toml && git pull --rebase && git stash pop && popd";
+    nupdate = "nrf /home/${myConfig.user.name}/.dotfiles/${myConfig.nixos.bkp_conf_dir_name}";
   };
 }

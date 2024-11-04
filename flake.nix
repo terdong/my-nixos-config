@@ -70,7 +70,7 @@
               deps = [ "users" ];
               text = ''
                 NIXOS_PATH="${myConfig.nixos.config_path}"
-                BACKUP_DIR_NAME="${myConfig.nixos.backup_config_directory_name}"
+                BACKUP_DIR_NAME="${myConfig.nixos.bkp_conf_dir_name}"
                 SUDO_USER=${userName}
 
                 # Get the current user's home directory

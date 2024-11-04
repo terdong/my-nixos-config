@@ -20,4 +20,4 @@ private_key_path = "/mnt/c/Users/YOUR_NAME/.ssh/id_rsa" #Do not place the file i
 
 [nixos]
 config_path = "/tmp/my-nixos-config"   #Path to the original nixos config directory to copy it to user home. If you want to continue with your nixos settings from the user home, this key must be filled in.
-backup_config_directory_name = "nixos" #Directory name to change from my-nixos-config
+bkp_conf_dir_name = "nixos" #Directory name to change from my-nixos-config

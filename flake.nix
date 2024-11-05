@@ -48,6 +48,7 @@
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = {
+          inherit pkgs-unstable;
           inherit myConfig;
           inherit myUtils;
         };

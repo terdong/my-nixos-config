@@ -36,9 +36,7 @@ in
   };
 
   environment = {
-    systemPackages = with pkgs; [
-      nixfmt-rfc-style
-    ];
+    systemPackages = with pkgs; [ nixfmt-rfc-style ];
   };
 
   nix.settings.experimental-features = [

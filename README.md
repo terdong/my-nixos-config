@@ -147,6 +147,11 @@ my-nixos-config/
       refresh = "source $HOME/.zshrc";
   };
   ```
+
+- To get alias list, you can use the following command:
+  - "nalias": this shows the nix related aliases.
+  - "git alias": this shows the git related aliases.
+
 - Updating the System: Run below to pull in the latest dependencies defined in the Flake.
   ```bash
   nix flake update

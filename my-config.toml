@@ -24,19 +24,21 @@ config_path = "/tmp/my-nixos-config" #Path to the original nixos config director
 bkp_conf_dir_name = "nixos"          #Directory name to change from my-nixos-config
 
 [home]
+#Set packages you want to install. You can find available packages at https://search.nixos.org/packages
+#'wget' is already included internally.(Check out ./home/default.nix);
+packages = ["bat", "curl", "ripgrep", "tree", "jq", "httpie", "htop", "fd", "tmux"]
+
 #Set additional PATHs for user session.
 sessionPath = [
-  #examples
   #"/mnt/g/Programs/Ollama",
   #"/mnt/g/Programs/foobar2000"
 ]
 
 #Set environment variables for user session.
 [home.sessionVariables]
-#example
-JAVA_HOME = "/usr/lib/jvm/default-java"
+#JAVA_HOME = "/usr/lib/jvm/default-java"
 
-#Set aliases for user session.For example:
+#Set aliases for user session.
 [home.shellAliases]
-#example
-#ollama = "/mnt/g/Programs/Ollama/ollama.exe"
+#ports = "netstat -tunlp"
+#meminfo = "free -m -l -t -h"

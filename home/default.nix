@@ -11,6 +11,7 @@ let
   ssh = myConfig.ssh;
   aliases = myConfig.aliases;
   myHome = myConfig.home;
+  myHomePackages = map (pkg: pkgs.${pkg}) myHome.packages;
 in
 {
   imports = [ ./programs ];
@@ -37,17 +38,7 @@ in
     };
 
     #Set packages for your session.
-    packages = with pkgs; [
-      wget
-      curl
-      ripgrep
-      tree
-      jq
-      httpie
-      htop
-      fd
-      tmux
-    ];
+    packages = with pkgs; [ wget ] ++ myHomePackages;
 
     #These two options below are automatically applied when nix flake rebuild is complete.
     sessionPath = [ ] ++ myHome.sessionPath;

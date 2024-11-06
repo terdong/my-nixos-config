@@ -52,15 +52,21 @@ cd /tmp #or wherever you want
 git clone https://github.com/terdong/my-nixos-config
 cd my-nixos-config
 ```
+- But if the parent directory is not /tmp, change the value of config_path key in the my-config.toml to the full path you changed.
+  ```toml
+  #./my-config.toml
+  [nixos]
+  config_path = "/tmp/my-nixos-config"
+  ```
 
 ### 4. Edit your settings in ./my-config.toml
 ```bash
-vi my-config.toml
+vi my-config.toml #or nano editor works too
 ```
 - <ins>_**It must be changed, especially:**_</ins>
   ```toml
   [user]
-  name = "YOUR_NAME" #<- Change it to whatever name you want.
+  name = "YOUR_NAME" #<- At least this value should be changed. It will become not only user name, but also your home directory name.
   ```
 
 ### 5. Initialize NixOS with Flakes
@@ -80,60 +86,66 @@ sudo nixos-rebuild switch --flake .
 
 ### Project Structure
 ```plaintext
-
-my-nixos-config/
-├── home/                  # User-specific Home Manager configurations
-│   └── programs/          # Individual program configurations for Home Manager
-│       ├── git/
-│       ├── vim/           # Default
-│       ├── nixvim/
-│       ├── nu/
-│       └── zsh/           # Default
-├── lib/                   # Directory for utility functions and shared libraries
-│   └── my-utils.nix
-├── nixos/                 # NixOS system-level configurations
-│   ├── modules/           # NixOS configuration modules
-│   │   └── aliases.nix    # Aliases depends on system-level
-│   └── platforms/         # Platform-specific NixOS configurations
-│       ├── linux/
-│       └── wsl/
+.
+├── LICENSE
+├── README.md
 ├── flake.lock
-├── flake.nix              # Main Flake file for defining NixOS and Home Manager
-├── my-config.toml         # User-specific configuration variables. Check out the file for more details.
-└── README.md              # Project documentation
+├── flake.nix                   # Main Flake file for defining NixOS and Home Manager
+├── my-config.toml              # User-specific configuration variables. Check out the file for more details.
+├── home                        # User-specific Home Manager configurations
+│   └── programs                # Individual program configurations for Home Manager
+│       ├── git
+│       │   └── aliases.nix
+│       ├── nixvim
+│       ├── nu
+│       ├── vim                 # Default
+│       └── zsh                 # Default
+├── lib                         # Directory for utility functions and shared libraries
+│   └── my-utils.nix
+└── nixos                       # NixOS system-level configurations
+    ├── modules                 # NixOS configuration modules
+    │   ├── activationScripts   # Script functions called after "Nixos-rebuild switch --flake" is executed
+    │   │   └── copyConfigToHome.nix
+    │   ├── aliases             # Aliases depends on system-level
+    └── platforms               # Platform-specific NixOS configurations
+        ├── linux
+        └── wsl
 ```
 - Most directories have their own default.nix file, which contains settings relevant to that directory.
-- When you import a directory from .nix file, the default.nix file in that directory is automatically read.
+- When you import a directory in nix file, the default.nix file in that directory is automatically read.
 
 ## Tips
-- You can add as many as you want here if you need.
-  ```nix
-  #./home/default.nix
-    #Set packages for your session.
-    packages = with pkgs; [
-      wget
-      curl
-      ripgrep
-      tree
-      jq
-      httpie
-      htop
-      fd
-      tmux
-    ];
+- User's packages, alias, environment variables and path can be set in my-config.toml.
+  - For reference, if nothing changes after changing the values and rebuilding, exit the shell and re-enter.
+  ```toml
+  #./my-config.toml
+  [home]
+  #Set packages you want to install. You can find available packages at https://search.nixos.org/packages
+  #'wget' is already included internally.(Check out ./home/default.nix);
+  packages = ["bat", "curl", "ripgrep", "tree", "jq", "httpie", "htop", "fd", "tmux"]
 
-    #Set aliases for user session.
-    # shellAliases = {
-    # };
+  #Set additional PATHs for user session.
+  sessionPath = [
+    #"/mnt/g/Programs/Ollama",
+    #"/mnt/g/Programs/foobar2000"
+  ]
 
-    #Set environment variables for user session.
-    # sessionVariables = {
-    # };
+  #Set environment variables for user session.
+  [home.sessionVariables]
+  #JAVA_HOME = "/usr/lib/jvm/default-java"
+
+  #Set aliases for user session.
+  [home.shellAliases]
+  #ports = "netstat -tunlp"
+  #meminfo = "free -m -l -t -h"
   ```
-- Global aliases can be added in ./nixos/modules/aliases.nix , and home aliases can be added for a config file of each shell , such as ./home/programs/zsh/default.nix.
+- System aliases can be added in ./nixos/modules/aliases.nix , and shell aliases can be added for a config file of each shell , such as ./home/programs/zsh/default.nix.
   ```nix
-  # ./nixos/modules/aliases.nix
+  # ./nixos/modules/aliases/default.nix
   environment.shellAliases = {
+    nalias = "..."; # this is for listing all aliases below
+    gspm = "git stash push my-config.toml";
+    gsp = "git stash pop";
     nrf = "sudo nixos-rebuild switch --flake";
     nrfd = "nrf .";
     nfc = "nix flake check";
@@ -144,12 +156,12 @@ my-nixos-config/
 
   #./home/programs/zsh/default.nix
   programs.zsh.shellAliases = {
-      refresh = "source $HOME/.zshrc";
+      reload = "source $HOME/.zshrc";
   };
   ```
 
 - To get alias list, you can use the following command:
-  - "nalias": this shows the nix related aliases.
+  - "nalias": this shows the nix rebuilding related aliases.
   - "git alias": this shows the git related aliases.
 
 - Updating flake.lock: Run below to pull in the latest dependencies defined in the Flake.
@@ -178,8 +190,8 @@ my-nixos-config/
 ## Troubleshooting
 - Permissions: Ensure you have the correct permissions for the files and directories.
 - File System: If you encounter read-only file system errors, ensure the NixOS and Home directories are writable.
-- Nix Commands: If Flake commands don’t work, confirm experimental-features = nix-command flakes is set in your Nix config.
-- If you run "nixos-rebuild switch --flake ." and it says 'No such file or directory', Run "git add *"
+- Nix Commands: If Flake commands don’t work, confirm "experimental-features = nix-command flakes" is set in your Nix config.
+- If you have added files and run "nixos-rebuild switch --flake ." and it says 'No such file or directory', Run "git add *"
 - On Linux not WSL: As mentioned earlier, it has not been tested in a general Linux environment, but it is expected that there will be no problem if "./nixos/platforms/linux/default.nix" is ​​set properly.
 - my-config.toml: Nix follows the principle of purity. Therefore, it cannot create an impurity situation where it loads external files or newly added files, so it has no choice but to manage files as they are. If you want to update to the latest version from github, I recommend using the simple and convenient "npull" alias(assuming only my-config.toml has changed).
 - How to fix a clipboard not working in WSL environment:

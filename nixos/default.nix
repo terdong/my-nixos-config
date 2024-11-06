@@ -13,16 +13,16 @@ in
 {
   imports = [
     platformConfig
-    ./modules/aliases.nix
+    ./modules
   ];
 
   system.stateVersion = sys.state_version;
   time.timeZone = sys.time_zone;
   networking.hostName = sys.host_name;
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = sys.locale;
 
   users = {
-    defaultUserShell = pkgs.${myConfig.system.shell};
+    defaultUserShell = pkgs.${sys.shell};
     users.${myConfig.user.name} = {
       isNormalUser = true;
       extraGroups = [

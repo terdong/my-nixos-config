@@ -4,6 +4,7 @@ time_zone = "Asia/Seoul"
 host_name = "nixos"
 state_version = "24.05"  #NixOS Version
 shell = "zsh"            #Before change this, you should add exact programs to ./home/modules/program/${shell} what you choosed shell like "fish". By default, "zsh" and "nu" are supported.
+locale = "ko_KR.UTF-8"   # default: en_US.UTF-8
 
 [user]
 name = "YOUR_NAME"               #For user and home directory
@@ -19,5 +20,23 @@ enabled = false                                         #Change to true to enabl
 private_key_path = "/mnt/c/Users/YOUR_NAME/.ssh/id_rsa" #Do not place the file in this project.
 
 [nixos]
-config_path = "/tmp/my-nixos-config"   #Path to the original nixos config directory to copy it to user home. If you want to continue with your nixos settings from the user home, this key must be filled in.
-bkp_conf_dir_name = "nixos" #Directory name to change from my-nixos-config
+config_path = "/tmp/my-nixos-config" #Path to the original nixos config directory to copy it to user home. If you want to continue with your nixos settings from the user home, this key must be filled in.
+bkp_conf_dir_name = "nixos"          #Directory name to change from my-nixos-config
+
+[home]
+#Set additional PATHs for user session.
+sessionPath = [
+  #examples
+  #"/mnt/g/Programs/Ollama",
+  #"/mnt/g/Programs/foobar2000"
+]
+
+#Set environment variables for user session.
+[home.sessionVariables]
+#example
+JAVA_HOME = "/usr/lib/jvm/default-java"
+
+#Set aliases for user session.For example:
+[home.shellAliases]
+#example
+#ollama = "/mnt/g/Programs/Ollama/ollama.exe"

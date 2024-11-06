@@ -152,7 +152,7 @@ my-nixos-config/
   - "nalias": this shows the nix related aliases.
   - "git alias": this shows the git related aliases.
 
-- Updating the System: Run below to pull in the latest dependencies defined in the Flake.
+- Updating flake.lock: Run below to pull in the latest dependencies defined in the Flake.
   ```bash
   nix flake update
   ```

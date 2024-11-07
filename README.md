@@ -126,8 +126,8 @@ sudo nixos-rebuild switch --flake .
 
   #Set additional PATHs for user session.
   sessionPath = [
-    #"/mnt/g/Programs/Ollama",
-    #"/mnt/g/Programs/foobar2000"
+    #"/mnt/c/Users/YOUR_NAME/AppData/Local/Programs/Microsoft VS Code/bin",
+    #"/mnt/c/Users/YOUR_NAME/scoop/apps/win32yank/0.1.1"
   ]
 
   #Set environment variables for user session.
@@ -194,11 +194,14 @@ sudo nixos-rebuild switch --flake .
 - If you have added files and run "nixos-rebuild switch --flake ." and it says 'No such file or directory', Run "git add *"
 - On Linux not WSL: As mentioned earlier, it has not been tested in a general Linux environment, but it is expected that there will be no problem if "./nixos/platforms/linux/default.nix" is ​​set properly.
 - my-config.toml: Nix follows the principle of purity. Therefore, it cannot create an impurity situation where it loads external files or newly added files, so it has no choice but to manage files as they are. If you want to update to the latest version from github, I recommend using the simple and convenient "npull" alias(assuming only my-config.toml has changed).
-- How to fix a clipboard not working in WSL environment:
+- How to fix a clipboard(for copy and paste two way) not working in WSL environment:
+  - Add the path such as "/mnt/c/Users/YOUR_NAME/scoop/apps/win32yank/0.1.1" after installing win32yank on windows somehow in home.sessionPath
   ```toml
   #./my-config.toml
-  [programs]
-  win32yank_path ="" # Change to the path such as "/mnt/c/Users/YOUR_NAME/scoop/apps/win32yank/0.1.1" after installing win32yank on windows somehow.
+  [home]
+  sessionPath = [
+  "/mnt/c/Users/YOUR_NAME/scoop/apps/win32yank/0.1.1"
+  ]
   ```
 
 <details>

@@ -11,10 +11,6 @@ name = "YOUR_NAME"               #For user and home directory
 full_name = "your_full_name"     #For git user name
 email = "your.email@example.com" #For git user email
 
-[programs]
-vscode_path = ""    #Vscode_path for wsl such as "/mnt/c/Users/YOUR_NAME/AppData/Local/Programs/Microsoft VS Code/bin"
-win32yank_path = "" # Change to such as "/mnt/c/Users/YOUR_NAME/scoop/apps/win32yank/0.1.1" after installing win32yank on windows somehow.
-
 [ssh]
 enabled = false                                         #Change to true to enable the ssh key copy feature.
 private_key_path = "/mnt/c/Users/YOUR_NAME/.ssh/id_rsa" #Do not place the file in this project.
@@ -30,8 +26,8 @@ packages = ["bat", "curl", "ripgrep", "tree", "jq", "httpie", "htop", "fd", "tmu
 
 #Set additional PATHs for user session.
 sessionPath = [
-  #"/mnt/g/Programs/Ollama",
-  #"/mnt/g/Programs/foobar2000"
+  #"/mnt/c/Users/YOUR_NAME/AppData/Local/Programs/Microsoft VS Code/bin",
+  #"/mnt/c/Users/YOUR_NAME/scoop/apps/win32yank/0.1.1"
 ]
 
 #Set environment variables for user session.

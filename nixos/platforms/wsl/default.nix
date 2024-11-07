@@ -34,14 +34,6 @@
   };
 
   environment = {
-    /*
-      # https://github.com/nix-community/NixOS-WSL/issues/472
-      sessionVariables = {
-        PATH = [ "/mnt/c/Users/darren/AppData/Local/Programs/Microsoft VS Code/Code.exe" ];
-      };
-    */
-
-    extraInit = ''export PATH="$PATH:${myConfig.programs.vscode_path}:${myConfig.programs.win32yank_path}"'';
     systemPackages = with pkgs; [
       wslu
       wsl-open

@@ -35,6 +35,8 @@ in
         fi
         ";
       };
+      #Handling annoying .direnv: https://github.com/direnv/direnv/wiki/Customizing-cache-location
+      ".config/direnv/direnvrc".source = ./resources/direnvrc;
     };
 
     #Set packages for your session.
@@ -47,6 +49,26 @@ in
     } // myHome.sessionVariables;
 
     #This is merged with the rc file of you selected shell and is not automatically reloaded. You can apply the rc file by "source" command or through the "reload" alias set in the configuration of each shell.(check out /home/programs/zsh/default.nix)
-    shellAliases = { } // myHome.shellAliases;
+    shellAliases = {
+      nixify = ''
+        if [ ! -e ./.envrc ]; then
+          echo 'use nix' > .envrc
+          direnv allow
+        fi
+        if [[ ! -e shell.nix ]] && [[ ! -e default.nix ]]; then
+          echo "with import <nixpkgs> {};\nmkShell {\n  nativeBuildInputs = [\n    bashInteractive\n  ];\n}" > default.nix
+          $EDITOR default.nix
+        fi
+      '';
+      flakify = "
+        if [ ! -e flake.nix ]; then
+          nix flake new -t github:nix-community/nix-direnv .
+        elif [ ! -e .envrc ]; then
+          echo 'use flake' > .envrc
+          direnv allow
+        fi
+        $EDITOR flake.nix
+        ";
+    } // myHome.shellAliases;
   };
 }

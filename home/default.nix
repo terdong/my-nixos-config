@@ -69,6 +69,15 @@ in
         fi
         $EDITOR flake.nix
         ";
+      scalafy = "
+        if [ ! -e flake.nix ]; then
+          cp $HOME/.config/nixos/home/resources/scalafy/flake.nix .
+        fi
+        if [ ! -e .envrc ]; then
+          echo 'use flake' > .envrc
+          direnv allow
+        fi
+      ";
     } // myHome.shellAliases;
   };
 }

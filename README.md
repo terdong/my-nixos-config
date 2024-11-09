@@ -94,12 +94,16 @@ sudo nixos-rebuild switch --flake .
 ├── my-config.toml              # User-specific configuration variables. Check out the file for more details.
 ├── home                        # User-specific Home Manager configurations
 │   └── programs                # Individual program configurations for Home Manager
-│       ├── git
-│       │   └── aliases.nix
-│       ├── nixvim
-│       ├── nu
-│       ├── vim                 # Default
-│       └── zsh                 # Default
+│   │   ├── git
+│   │   │   ├── aliases.nix
+│   │   ├── nixvim
+│   │   ├── nu
+│   │   ├── vim                 # Default
+│   │   └── zsh                 # Default
+│   └── resources
+│       ├── direnvrc            # For handling annoying .direnv
+│       └── scalafy             # Source for copying flake.nix when using "Scalafy" alias
+│           └── flake.nix
 ├── lib                         # Directory for utility functions and shared libraries
 │   └── my-utils.nix
 └── nixos                       # NixOS system-level configurations
@@ -185,6 +189,16 @@ sudo nixos-rebuild switch --flake .
   #or
   # specific path
   sudo nixos-rebuild switch --flake ./my-nixos-config
+  ```
+- Convenient direnv related snippets
+  ```nix
+  #./home/default.nix
+  shellAliases = {
+      nixify = "..."; # To quickly add a default.nix
+      flakify = "..."; # To quickly add a flake.nix
+      scalafy = "..."; # For scala projects only
+  };
+
   ```
 
 ## Troubleshooting

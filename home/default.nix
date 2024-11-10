@@ -11,7 +11,7 @@ let
   ssh = myConfig.ssh;
   aliases = myConfig.aliases;
   myHome = myConfig.home;
-  myHomePackages = map (pkg: pkgs.${pkg}) myHome.packages;
+  myHomePackages = map (pkg: pkgs-unstable.${pkg}) myHome.packages;
 in
 {
   imports = [ ./programs ];

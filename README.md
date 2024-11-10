@@ -8,8 +8,8 @@ This repository provides a simple and modular Nix Flake setup for configuring a 
 
 * [x] NixOS system configuration
 * [x] Home Manager integration for user environments
-* [x] Managing settings via external file(my-config.toml)
-* [x] Supports private ssh key via ssh.private_key_path in my-coinfig.toml
+* [x] Managing settings via my-config.toml
+* [x] Supports files copy from external sources
 * [x] Supports Direnv(nix-direnv)
 * [x] Supports VS Code for WSL
 * [x] Supports win32yank for clipboard sync
@@ -109,7 +109,8 @@ sudo nixos-rebuild switch --flake .
 └── nixos                       # NixOS system-level configurations
     ├── modules                 # NixOS configuration modules
     │   ├── activationScripts   # Script functions called after "Nixos-rebuild switch --flake" is executed
-    │   │   └── copyConfigToHome.nix
+    │   │   ├── copyConfigToHome.nix
+    │   │   └── copyExternalFilesToHome.nix
     │   ├── aliases             # Aliases depends on system-level
     └── platforms               # Platform-specific NixOS configurations
         ├── linux
@@ -119,6 +120,23 @@ sudo nixos-rebuild switch --flake .
 - When you import a directory in nix file, the default.nix file in that directory is automatically read.
 
 ## Tips
+- If you want to copy files from external sources, use the following settings:
+  ```toml
+  [external]
+  enabled = false # Set this value to true to enable it.
+  files = [
+    #[
+    #  "/mnt/c/Users/YOUR_NAME/.wakatime.cfg",   # Source to copy.
+    #  ".wakatime.cfg",                          # $HOME/Destination(relative path). It will be "~/.wakatime.cfg"
+    #  ""                                        # Permission of the copied file. If you don't want to change permission, leave this empty
+    #],
+    #[
+    #  "/mnt/c/Users/YOUR_NAME/.ssh/id_rsa",
+    #  ".ssh/id_rsa",                            # it will be "~/.ssh/id_rsa".
+    #  "600"
+    #],
+  ]
+  ```
 - User's packages, alias, environment variables and path can be set in my-config.toml.
   - For reference, if nothing changes after changing the values and rebuilding, exit the shell and re-enter.
   ```toml

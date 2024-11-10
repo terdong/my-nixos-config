@@ -22,8 +22,6 @@ This repository provides a simple and modular Nix Flake setup for configuring a 
 - This guide is based on the WSL environment installed on Windows OS.
 - Download [the latest version](https://github.com/nix-community/NixOS-WSL/releases/latest) of NixOS-WSL.
   - Refer to [this site](https://github.com/nix-community/NixOS-WSL) to install it.
-- **Nix** with experimental features enabled for Flakes:
-  - To enable Flakes, add `experimental-features = nix-command flakes` to your `~/.config/nix/nix.conf`.
 - If you successfully entered the basic shell(probably "bash") of the NixOS by entering the command below preparations are complete in **cmd** or **power shell**, you are ready.
   ```powershell
   wsl -d NixOS

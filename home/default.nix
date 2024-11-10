@@ -23,15 +23,6 @@ in
     enableNixpkgsReleaseCheck = false;
 
     file = {
-      ".ssh/dummy" = {
-        text = "dummy";
-        recursive = true;
-        onChange = "
-        if [ -e $HOME/.ssh/id_rsa ]; then
-          chmod 600 $HOME/.ssh/id_rsa
-        fi
-        ";
-      };
       #Handling annoying .direnv: https://github.com/direnv/direnv/wiki/Customizing-cache-location
       ".config/direnv/direnvrc".source = ./resources/direnvrc;
     };

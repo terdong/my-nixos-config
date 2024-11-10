@@ -24,7 +24,7 @@ files = [
   #  ""                                        # Permission of the copied file. If you don't want to change permission, leave this empty
   #],
   #[
-  #  "/mnt/c/Users/YOUR_NAME/.ssh/id_rsa",     # Source to copy.
+  #  "/mnt/c/Users/YOUR_NAME/.ssh/id_rsa",
   #  ".ssh/id_rsa",                            # it will be "~/.ssh/id_rsa".
   #  "600"
   #],

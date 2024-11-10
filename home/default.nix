@@ -27,10 +27,7 @@ in
         text = "dummy";
         recursive = true;
         onChange = "
-        ssh_enabled=${toString ssh.enabled}
-        private_key_path=${toString ssh.private_key_path}
-        if [ $ssh_enabled ] && [ -f $private_key_path ]; then
-          cp -rf $private_key_path $HOME/.ssh/id_rsa
+        if [ -e $HOME/.ssh/id_rsa ]; then
           chmod 600 $HOME/.ssh/id_rsa
         fi
         ";

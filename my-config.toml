@@ -11,18 +11,39 @@ name = "YOUR_NAME"               #For user and home directory
 full_name = "your_full_name"     #For git user name
 email = "your.email@example.com" #For git user email
 
-[ssh]
-enabled = false                                         #Change to true to enable the ssh key copy feature.
-private_key_path = "/mnt/c/Users/YOUR_NAME/.ssh/id_rsa" #Do not place the file in this project.
-
 [nixos]
 config_path = "/tmp/my-nixos-config" #Path to the original nixos config directory to copy it to user home. If you want to continue with your nixos settings from the user home, this key must be filled in.
 bkp_conf_dir_name = "nixos"          #Directory name to change from my-nixos-config
 
+[external]
+enabled = false # If you want to copy files from external sources, set this value to true
+files = [
+  #[
+  #  "/mnt/c/Users/YOUR_NAME/.wakatime.cfg",   # Source to copy.
+  #  ".wakatime.cfg",                          # $HOME/Destination(relative path). It will be "~/.wakatime.cfg"
+  #  ""                                        # Permission of the copied file. If you don't want to change permission, leave this empty
+  #],
+  #[
+  #  "/mnt/c/Users/YOUR_NAME/.ssh/id_rsa",     # Source to copy.
+  #  ".ssh/id_rsa",                            # it will be "~/.ssh/id_rsa".
+  #  "600"
+  #],
+]
+
 [home]
 #Set packages you want to install. You can find available packages at https://search.nixos.org/packages
 #'wget' is already included internally.(Check out ./home/default.nix);
-packages = ["bat", "curl", "ripgrep", "tree", "jq", "httpie", "htop", "fd", "tmux"]
+packages = [
+  "bat",
+  "curl",
+  "ripgrep",
+  "tree",
+  "jq",
+  "httpie",
+  "htop",
+  "fd",
+  "tmux",
+]
 
 #Set additional PATHs for user session.
 sessionPath = [

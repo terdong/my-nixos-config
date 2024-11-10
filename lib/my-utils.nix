@@ -25,9 +25,21 @@ let
       onChange = "chmod ${perm} ${filePath}";
     };
   };
+
   existsFile = path: builtins.pathExists path;
+
+  parseTomlToShellAsArrays =
+    tomlArrays:
+    builtins.concatStringsSep " " (
+      builtins.map (pair: "'${builtins.elemAt pair 0}' '${builtins.elemAt pair 1}' '${builtins.elemAt pair 2}'") tomlArrays
+    );
 in
 {
 
-  inherit isWSL;
+  inherit
+    isWSL
+    createFileDef
+    existsFile
+    parseTomlToShellAsArrays
+    ;
 }

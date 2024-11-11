@@ -33,17 +33,7 @@ files = [
 [home]
 #Set packages you want to install. You can find available packages at https://search.nixos.org/packages
 #'wget' is already included internally.(Check out ./home/default.nix);
-packages = [
-  "bat",
-  "curl",
-  "ripgrep",
-  "tree",
-  "jq",
-  "httpie",
-  "htop",
-  "fd",
-  "tmux",
-]
+packages = ["bat", "curl", "ripgrep", "tree", "jq", "httpie", "htop", "fd"]
 
 #Set additional PATHs for user session.
 sessionPath = [

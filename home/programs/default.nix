@@ -11,6 +11,7 @@
     ./${myConfig.system.shell}
     ./git
     ./vim
+    ./tmux
     #./nixvim
     #./nu
   ];

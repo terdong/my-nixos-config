@@ -1,4 +1,4 @@
-{ pkgs, myConfig, ... }:
+{ pkgs-unstable, ... }:
 
 {
   programs.zsh = {
@@ -6,6 +6,7 @@
 
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
+    enableCompletion = true;
 
     oh-my-zsh = {
       enable = true;
@@ -23,5 +24,6 @@
     shellAliases = {
       reload = "source $HOME/.zshrc";
     };
+    package = pkgs-unstable.zsh;
   };
 }

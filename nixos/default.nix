@@ -22,14 +22,14 @@ in
   i18n.defaultLocale = sys.locale;
 
   users = {
-    defaultUserShell = pkgs.${sys.shell};
+    defaultUserShell = pkgs.${sys.shell}; # global shell
     users.${myConfig.user.name} = {
       isNormalUser = true;
       extraGroups = [
         "wheel"
         "networkmanager"
       ];
-      #shell = pkgs.${myConfig.system.shell}; # personal
+      #shell = pkgs.${myConfig.system.shell}; # personal shell
       ignoreShellProgramCheck = true;
     };
     users.root.ignoreShellProgramCheck = true;

@@ -1,5 +1,7 @@
-{ myConfig, ... }:
-
+{ pkgs, myConfig, ... }:
+let
+  shellFunctions = pkgs.copyPathToStore ../resources/shell-functions;
+in
 {
   programs = {
     home-manager.enable = true;
@@ -8,7 +10,7 @@
   };
 
   imports = [
-    ./${myConfig.system.shell}
+    (import ./${myConfig.system.shell} { inherit shellFunctions; })
     ./git
     ./vim
     ./tmux

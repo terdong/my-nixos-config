@@ -4,7 +4,7 @@ time_zone = "Asia/Seoul"
 host_name = "nixos"
 state_version = "24.05"  #NixOS Version
 shell = "zsh"            #Before change this, you should add exact programs to ./home/modules/program/${shell} what you choosed shell like "fish". By default, "zsh" and "nu" are supported.
-locale = "ko_KR.UTF-8"   # default: en_US.UTF-8
+locale = "en_US.UTF-8"
 
 [user]
 name = "YOUR_NAME"               #For user and home directory

@@ -216,6 +216,25 @@ sudo nixos-rebuild switch --flake .
   };
 
   ```
+- Add your custom function for shell to ./home/resources/shell-functions. Don't forget to call "reload" alias after nixos-rebuild switch.
+- ```bash
+  # ./home/resources/shell-functions
+
+  # The two functions below are samples.
+  helloNix() {
+    echo "Hello Nix!"
+  }
+
+  md4s() {
+    if [ $# -ne 2 ]; then
+      echo "Usage: md4s <project-name> <package-name>"
+      return 1
+    fi
+    SRC_PATH="src/{main,test}/scala/com/teamgehem/$2"
+    echo "Creating a new Scala project src directory for '$1' with package '$SRC_PATH'"
+    mkdir $1 && mkdir -p ./$1/src/{main,test}/scala/com/teamgehem/$2 && echo "Project directory created successfully!"
+  }
+  ```
 
 ## Troubleshooting
 - Permissions: Ensure you have the correct permissions for the files and directories.

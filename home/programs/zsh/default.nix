@@ -1,4 +1,5 @@
-{ pkgs-unstable, ... }:
+{ shellFunctions }:
+{ pkgs, pkgs-unstable, ... }:
 
 {
   programs.zsh = {
@@ -19,7 +20,10 @@
       ];
     };
 
-    initExtra = "if [ -f /etc/static/bashrc ]; then source <(grep 'alias' /etc/static/bashrc); fi";
+    initExtra = "
+      if [ -f /etc/static/bashrc ]; then source <(grep 'alias' /etc/static/bashrc); fi
+      source ${shellFunctions}
+    ";
 
     shellAliases = {
       reload = "source $HOME/.zshrc";

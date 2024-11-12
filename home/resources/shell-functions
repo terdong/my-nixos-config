@@ -1,0 +1,13 @@
+helloNix() {
+  echo "Hello Nix!"
+}
+
+md4s() {
+  if [ $# -ne 2 ]; then
+    echo "Usage: md4s <project-name> <package-name>"
+    return 1
+  fi
+  SRC_PATH="src/{main,test}/scala/com/teamgehem/$2"
+  echo "Creating a new Scala project src directory for '$1' with package '$SRC_PATH'"
+  mkdir $1 && mkdir -p ./$1/src/{main,test}/scala/com/teamgehem/$2 && echo "Project directory created successfully!"
+}

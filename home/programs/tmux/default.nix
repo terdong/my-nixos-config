@@ -9,10 +9,12 @@
       set-option -g default-shell ${pkgs-unstable.zsh}/bin/zsh
       set-option -g default-command ${pkgs-unstable.zsh}/bin/zsh
 
-      #set -g terminal-overrides 'xterm*:smcup@:rmcup@'
+      set -g terminal-overrides 'xterm*:smcup@:rmcup@'
       set -g mouse on
 
-      #setw -g mode-keys vi
+      setw -g mode-keys vi
+
+      set -g default-terminal xterm-256color
 
       # Use Alt-arrow keys without prefix key to switch panes
       bind -n M-Left select-pane -L
@@ -35,7 +37,7 @@
       set -g status-bg black
       set -g status-fg white
 
-      # toggle pane title visibility
+      #toggle pane title visibility
       bind T run 'zsh -c "arr=( off top ) && tmux setw pane-border-status ''${arr[''$(( ''${arr[(I)#{pane-border-status}]} % 2 + 1 ))]}"'
       # rename pane
       bind t command-prompt -p "(rename-pane)" -I "#T" "select-pane -T '%%'"

@@ -13,7 +13,7 @@ This repository provides a simple and modular Nix Flake setup for configuring a 
 * [x] Supports Direnv(nix-direnv)
 * [x] Supports VS Code for WSL
 * [x] Supports win32yank for clipboard sync
-* [ ] Supports Docker
+* [x] Supports Docker
 * [ ] Supports Linux
 * [ ] More useful packages
 
@@ -264,3 +264,12 @@ sudo nixos-rebuild switch --flake .
         Failed to connect to socket /run/user/1000/bus: Connection refused
     ```
   </details>
+
+
+## Acknowledgements
+
+This project was inspired by and benefited from the following open-source projects:
+
+- [nixos-wsl-starter](https://github.com/LGUG2Z/nixos-wsl-starter): This repository is intended to be a sane, batteries-included starter template for running a JeezyVim-powered NixOS development environment on WSL.
+
+Thank you to all the open-source contributors!

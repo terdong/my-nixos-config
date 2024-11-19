@@ -27,7 +27,7 @@ in
       isNormalUser = true;
       extraGroups = [
         "wheel"
-        "networkmanager"
+        "docker"
       ];
       #shell = pkgs.${myConfig.system.shell}; # personal shell
       ignoreShellProgramCheck = true;
@@ -43,4 +43,10 @@ in
     "nix-command"
     "flakes"
   ];
+
+  virtualisation.docker = {
+    enable = true;
+    enableOnBoot = true;
+    autoPrune.enable = true;
+  };
 }

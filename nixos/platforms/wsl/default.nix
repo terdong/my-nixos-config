@@ -26,6 +26,9 @@
         appendWindowsPath = false;
       };
     };
+
+    # Enable integration with Docker Desktop (needs to be installed)
+    docker-desktop.enable = false;
   };
 
   programs.nix-ld = {

@@ -11,7 +11,6 @@
   wsl = {
     enable = true;
     defaultUser = myConfig.user.name;
-    nativeSystemd = true;
     wslConf = {
       automount = {
         enabled = true;

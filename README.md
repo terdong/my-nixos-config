@@ -169,6 +169,7 @@ sudo nixos-rebuild switch --flake .
     nrf = "sudo nixos-rebuild switch --flake";
     nrfd = "nrf .";
     nfc = "nix flake check";
+    nfu = "nix flake update";
     nfcd = "nfc .";
     npull = "pushd /home/${myConfig.user.name}/.dotfiles/${myConfig.nixos.bkp_conf_dir_name} && git stash push my-config.toml && git pull --rebase && git stash pop && popd";
     nupdate = "nrf /home/${myConfig.user.name}/${myConfig.nixos.bkp_conf_dir_name}";

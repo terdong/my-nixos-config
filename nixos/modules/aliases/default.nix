@@ -11,5 +11,6 @@
     nfcd = "nfc .";
     npull = "pushd /home/${myConfig.user.name}/.dotfiles/${myConfig.nixos.bkp_conf_dir_name} && gspm && git pull --rebase && gsp && popd";
     nupdate = "nrf /home/${myConfig.user.name}/.dotfiles/${myConfig.nixos.bkp_conf_dir_name}";
+    ngarbage = "sudo nix-collect-garbage -d";
   };
 }

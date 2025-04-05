@@ -1,4 +1,4 @@
-{ nixos-wsl }:
+{ pkgs-unstable, nixos-wsl }:
 {
   pkgs,
   myConfig,
@@ -27,7 +27,6 @@ in
       isNormalUser = true;
       extraGroups = [
         "wheel"
-        "docker"
       ];
       #shell = pkgs.${myConfig.system.shell}; # personal shell
       ignoreShellProgramCheck = true;
@@ -36,7 +35,16 @@ in
   };
 
   environment = {
-    systemPackages = with pkgs; [ nixfmt-rfc-style ];
+    systemPackages =
+      with pkgs;
+      [
+        nixfmt-rfc-style
+      ]
+      ++ (with pkgs-unstable; [
+        podman-compose # like docker-compose for podman
+        dive # a tool to analyze and inspect Docker containers, images, objects, files, layers, volumes, etc.
+        podman-tui # a terminal user interface for managing Podman containers and images
+      ]);
   };
 
   nix.settings.experimental-features = [
@@ -44,9 +52,11 @@ in
     "flakes"
   ];
 
-  virtualisation.docker = {
+  virtualisation.podman = {
     enable = true;
-    enableOnBoot = true;
+    package = pkgs-unstable.podman;
+    defaultNetwork.settings.dns_enabled = true;
     autoPrune.enable = true;
+    dockerCompat = true;
   };
 }

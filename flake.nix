@@ -54,7 +54,10 @@
         };
 
         modules = [
-          (import ./nixos { inherit nixos-wsl; })
+          (import ./nixos {
+            inherit pkgs-unstable;
+            inherit nixos-wsl;
+          })
           home-manager.nixosModules.home-manager
           {
             home-manager = {

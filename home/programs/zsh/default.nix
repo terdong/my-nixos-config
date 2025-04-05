@@ -14,7 +14,7 @@
       theme = "robbyrussell";
       plugins = [
         "git"
-        "docker"
+        "podman"
         "node"
         "npm"
       ];

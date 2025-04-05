@@ -13,7 +13,7 @@ This repository provides a simple and modular Nix Flake setup for configuring a 
 * [x] Supports Direnv(nix-direnv)
 * [x] Supports VS Code for WSL
 * [x] Supports win32yank for clipboard sync
-* [x] Supports Docker
+* [x] Supports Podman
 * [ ] Supports Linux
 * [ ] More useful packages
 
@@ -173,6 +173,7 @@ sudo nixos-rebuild switch --flake .
     nfcd = "nfc .";
     npull = "pushd /home/${myConfig.user.name}/.dotfiles/${myConfig.nixos.bkp_conf_dir_name} && git stash push my-config.toml && git pull --rebase && git stash pop && popd";
     nupdate = "nrf /home/${myConfig.user.name}/${myConfig.nixos.bkp_conf_dir_name}";
+    ngarbage = "sudo nix-collect-garbage -d";
   };
 
   #./home/programs/zsh/default.nix
@@ -253,7 +254,16 @@ sudo nixos-rebuild switch --flake .
   "/mnt/c/Users/YOUR_NAME/scoop/apps/win32yank/0.1.1"
   ]
   ```
-
+- If the following warning appears when entering a command after installing podman:
+  ```sh
+  WARN[0000] Using cgroups-v1 which is deprecated in favor of cgroups-v2 with Podman v5 and will be removed in a future version. Set environment variable `PODMAN_IGNORE_CGROUPSV1_WARNING` to hide this warning
+  ```
+  create a file in %UserProfile%\.wslconfig and enter the following:
+  ```
+  [wsl2]
+  kernelCommandLine = cgroup_no_v1=all
+  ```
+  and restart wsl
 <details>
     <summary>Fixed issues</summary>
 

@@ -46,8 +46,9 @@ nix shell nixpkgs#git nixpkgs#vim
 ### 3. Clone the Repository
 
 ```bash
-cd /tmp #or wherever you want
-git clone https://github.com/terdong/my-nixos-config
+# /tmp or wherever you want
+cd /tmp &&
+git clone https://github.com/terdong/my-nixos-config &&
 cd my-nixos-config
 ```
 - But if the parent directory is not /tmp, change the value of config_path key in the my-config.toml to the full path you changed.

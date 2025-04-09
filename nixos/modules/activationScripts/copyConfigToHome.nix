@@ -41,10 +41,11 @@
       cd ..
       chown -R $SUDO_USER:users $DESTINATION_PATH
 
-      #Create symlink in .config for easier access (optional)
+      # Create symlink in .config for easier access (optional)
       ln -sfn $DESTINATION_PATH $DESTINATION_FOR_LINK || true
 
-      runuser -u $SUDO_USER -- /etc/profiles/per-user/$SUDO_USER/bin/git -C "$DESTINATION_PATH" update-index --assume-unchanged my-config.toml
+      # Blocked it because of an issue where it is not recognized when rebuilding flake
+      #runuser -u $SUDO_USER -- /etc/profiles/per-user/$SUDO_USER/bin/git -C "$DESTINATION_PATH" update-index --assume-unchanged my-config.toml
     fi
   '';
 }

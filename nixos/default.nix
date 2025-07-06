@@ -41,9 +41,9 @@ in
         nixfmt-rfc-style
       ]
       ++ (with pkgs-unstable; [
-        podman-compose # like docker-compose for podman
+        #podman-compose # like docker-compose for podman
         dive # a tool to analyze and inspect Docker containers, images, objects, files, layers, volumes, etc.
-        podman-tui # a terminal user interface for managing Podman containers and images
+        #podman-tui # a terminal user interface for managing Podman containers and images
       ]);
   };
 
@@ -52,11 +52,11 @@ in
     "flakes"
   ];
 
-  virtualisation.podman = {
-    enable = true;
-    package = pkgs-unstable.podman;
-    defaultNetwork.settings.dns_enabled = true;
-    autoPrune.enable = true;
-    dockerCompat = true;
-  };
+  # virtualisation.podman = {
+  #   enable = true;
+  #   package = pkgs-unstable.podman;
+  #   defaultNetwork.settings.dns_enabled = true;
+  #   autoPrune.enable = true;
+  #   dockerCompat = true;
+  # };
 }

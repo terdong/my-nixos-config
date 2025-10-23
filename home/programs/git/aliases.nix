@@ -1,6 +1,6 @@
 { ... }:
 {
-  programs.git.aliases = {
+  programs.git.settings.aliases = {
     # Status and information
     st = "status -sb"; # Shorter status with branch info
     br = "branch"; # List branches

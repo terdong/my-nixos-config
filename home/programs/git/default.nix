@@ -7,10 +7,10 @@
 
   programs.git = with myConfig.user; {
     enable = true;
-    userName = full_name;
-    userEmail = email;
 
-    extraConfig = {
+    settings = {
+      user.name = full_name;
+      user.email = email;
       core = {
         autocrlf = "input";
       };

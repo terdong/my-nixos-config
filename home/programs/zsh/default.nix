@@ -20,7 +20,7 @@
       ];
     };
 
-    initExtra = "
+    initContent = "
       if [ -f /etc/static/bashrc ]; then source <(grep 'alias' /etc/static/bashrc); fi
       source ${shellFunctions}
     ";

@@ -13,26 +13,33 @@
     {
       nixpkgs,
       flake-utils,
-      #nixpkgsForGraal,
       ...
     }:
     flake-utils.lib.eachDefaultSystem (
       system:
       let
-        pkgs = nixpkgs.legacyPackages.${system};
-        #pkgsForGraalvm = nixpkgsForGraal.legacyPackages.${system};
-        sbtWithGraalvm = pkgs.sbt.override { jre = pkgs.graalvmPackages.graalvm-ce; };
+        pkgs = import nixpkgs {
+          inherit system;
+          # Globally configure all packages to use GraalVM instead of the default jdk/jre via Overlay
+          overlays = [
+            (final: prev: {
+              jdk = final.graalvmPackages.graalvm-ce;
+              jre = final.graalvmPackages.graalvm-ce;
+            })
+          ];
+        };
       in
       {
-        devShells.default =
-          with pkgs;
-          mkShell {
-            packages = [ bashInteractive ];
-            buildInputs = [
-              graalvmPackages.graalvm-ce
-              sbtWithGraalvm
-            ];
-          };
+        devShells.default = pkgs.mkShell {
+          packages = with pkgs; [
+            bashInteractive
+            graalvmPackages.graalvm-ce
+            sbt
+            mill
+            nodejs_24
+            scala-cli
+          ];
+        };
       }
     );
 }
